@@ -1,24 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import {LoginPage} from "./screens/login-page/LoginPage";
+import {SignupPage} from "./screens/signup-page/SignupPage";
+import {HomePage} from "./screens/home-page/HomePage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router>
+          <div className="App">
+              {/*<header className="App-header">*/}
+              {/*    <img src={logo} className="App-logo" alt="logo"/>*/}
+              {/*    <p>*/}
+              {/*        Edit <code>src/App.js</code> and save to reload.*/}
+              {/*    </p>*/}
+              {/*    <a*/}
+              {/*        className="App-link"*/}
+              {/*        href="https://reactjs.org"*/}
+              {/*        target="_blank"*/}
+              {/*        rel="noopener noreferrer"*/}
+              {/*    >*/}
+              {/*        Learn React*/}
+              {/*    </a>*/}
+              {/*</header>*/}
+              <div className='routes'>
+                  <Routes>
+                      <Route exact path='/' element={<Navigate to='/home'/>}/>
+                      <Route exact path='/login' element={<LoginPage/>}/>
+                      <Route exact path='/signup' element={<SignupPage/>}/>
+                      <Route exact path='/home' element={<HomePage/>}/>
+                  </Routes>
+              </div>
+
+          </div>
+      </Router>
+
   );
 }
 
