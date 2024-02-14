@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useCallback, useState} from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import {HomePage} from "../home-page/HomePage";
 
 export const LoginPage = () => {
@@ -78,9 +78,9 @@ export const LoginPage = () => {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-blue-700 hover:text-blue-500">
+                                    <Link to="/forgot-password" className="font-semibold text-blue-700 hover:text-blue-500">
                                         Forgot password?
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="">
