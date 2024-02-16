@@ -3,6 +3,7 @@ import {useCallback, useState} from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import {Navigate, useNavigate} from "react-router-dom";
 import {HomePage} from "../home-page/HomePage";
+import { GoogleLoginButton } from "../../components/GoogleLoginButton";
 
 export const LoginPage = () => {
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ export const LoginPage = () => {
         }, [loginDetails]);
 
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-self-center px-6 py-28 lg:px-8">
+        <div className="flex bg-white min-h-full flex-1 flex-col justify-self-center px-6 py-28 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
                     <img
                         className="mx-auto h-28 w-auto content-brandLogo"
@@ -107,6 +108,8 @@ export const LoginPage = () => {
                             </button>
                         </div>
                     </form>
+                    <br></br>
+                    <GoogleLoginButton />
                 </div>
         </div>
         

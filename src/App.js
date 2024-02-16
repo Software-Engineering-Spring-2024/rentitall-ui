@@ -8,7 +8,7 @@ import {HomePage} from "./screens/home-page/HomePage";
 function App() {
   return (
       <Router>
-          <div className="App">
+          <div className="App h-screen bg-slate-300">
               {/*<header className="App-header">*/}
               {/*    <img src={logo} className="App-logo" alt="logo"/>*/}
               {/*    <p>*/}
