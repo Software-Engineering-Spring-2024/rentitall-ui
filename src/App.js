@@ -9,7 +9,7 @@ import {ForgotPasswordPage} from "./screens/forgot-password/ForgotPasswordPage";
 function App() {
   return (
       <Router>
-          <div className="App">
+          <div className="App h-screen bg-slate-300">
               {/*<header className="App-header">*/}
               {/*    <img src={logo} className="App-logo" alt="logo"/>*/}
               {/*    <p>*/}

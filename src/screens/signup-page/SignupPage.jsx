@@ -2,6 +2,7 @@ import {useCallback, useState} from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import axios from "axios";
 import {Navigate, useNavigate} from "react-router-dom";
+import { GoogleLoginButton } from "../../components/GoogleLoginButton";
 
 export const SignupPage = () => {
     const navigate = useNavigate();
@@ -34,10 +35,10 @@ export const SignupPage = () => {
             });
         console.log(response);
 
-        response.status === 200 ? navigate('/login') : handleSignupError(response.data);
+        response.status === 200 ? navigate('/home') : handleSignupError(response.data);
     }, [signupDetails]);
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-self-center px-6 py-12 lg:px-8">
+        <div className="flex bg-white min-h-full flex-1 flex-col justify-self-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
                 <img
                     className="mx-auto h-28 w-auto content-brandLogo"
@@ -200,7 +201,8 @@ export const SignupPage = () => {
                         </button>
                     </div>
                 </form>
-
+                <br />
+                <GoogleLoginButton />
             </div>
         </div>
     )
