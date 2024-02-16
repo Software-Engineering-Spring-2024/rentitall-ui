@@ -1,8 +1,10 @@
 import { GoogleLogin } from '@react-oauth/google';
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from "react-router-dom";
 
 export const GoogleLoginButton = () => {
+    const navigate = useNavigate()
     return (
         <GoogleLogin
             onSuccess={async (credentialResponse) => {
@@ -22,6 +24,7 @@ export const GoogleLoginButton = () => {
                         }
                 });
                 console.log("google_oauth_response", google_oauth_response)
+                return google_oauth_response.status === 200 && navigate('/home')
             }}
             onError={() => {
                 console.log('Login Failed');
