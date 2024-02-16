@@ -35,7 +35,7 @@ export const SignupPage = () => {
             });
         console.log(response);
 
-        response.status === 200 ? navigate('/login') : handleSignupError(response.data);
+        response.status === 200 ? navigate('/home') : handleSignupError(response.data);
     }, [signupDetails]);
     return (
         <div className="flex bg-white min-h-full flex-1 flex-col justify-self-center px-6 py-12 lg:px-8">
