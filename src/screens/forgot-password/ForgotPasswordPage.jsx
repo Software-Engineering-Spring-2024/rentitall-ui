@@ -2,6 +2,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import validator from "validator";
 import axios from "axios";
+import {BackArrowButton} from "../../components/BackArrowButton";
 export const ForgotPasswordPage = () => {
     const navigate = useNavigate();
     const [email,setEmail] = useState('');
@@ -27,13 +28,14 @@ export const ForgotPasswordPage = () => {
     function sentSuccess(response){
         setDisplayMessageColor('text-dark-green');
         setGeneratedOtp(response.data.otp);
-    }
-    const handleResponse = (response) => {
-        console.log(response);
-        response.status === 200 ? sentSuccess(response) : setDisplayMessageColor('text-red');
         setDisplayMessage(response.data.message);
-        console.log(displayMessage);
         setRegenerateTimer();
+    }
+    const handleErrorResponse = (response) => {
+        // console.log(response);
+        setDisplayMessageColor('text-red-600');
+        setDisplayMessage(response.data.message);
+        // console.log(displayMessage);
     }
     const setRegenerateTimer = () => {
         setStartTimer(true);
@@ -41,22 +43,33 @@ export const ForgotPasswordPage = () => {
             setStartTimer(false);
         },60000)
     }
-
+    async function callApi(req){
+        try{
+            const response = await axios.post(process.env.REACT_APP_LOGIN_SERVICE + '/sendOtp',{'email': email},{headers:
+                    {
+                        "Content-Type": "application/json"
+                    }
+            });
+            sentSuccess(response);
+        }
+        catch (e){
+            console.error('Request failed:', e);
+            if (e.response && e.response.status === 500) {
+                handleErrorResponse(e.response);
+            }
+            handleErrorResponse(e.response);
+        }
+    }
     const sendCodeToEmail = useCallback(
         async (e) => {
             setStartTimer(false);
             setTimer(60);
             e.preventDefault();
             if (email !== '' && validator.isEmail(email)) {
-                const response = await axios.post(process.env.REACT_APP_LOGIN_SERVICE + '/sendOtp',{'email': email},{headers:
-                        {
-                            "Content-Type": "application/json"
-                        }
-                });
-                handleResponse(response);
+                await callApi({email: email})
             }
             else{
-                setDisplayMessageColor('text-red');
+                setDisplayMessageColor('text-red-600');
                 setDisplayMessage("Enter a Valid Email Address..");
             }
         },
@@ -64,14 +77,16 @@ export const ForgotPasswordPage = () => {
     );
     const verifyCode = (e) => {
         e.preventDefault();
-        const enteredOtp = e.target.value;
-        enteredOtp === generatedOtp ? navigate('/reset-password'): setDisplayMessageColor('text-red');
+        console.log(generatedOtp);
+        console.log(verificationCode);
+        verificationCode === generatedOtp ? navigate('/reset-password',{state:{email:email,allowed:true}}): setDisplayMessageColor('text-red-600');
         setDisplayMessage('Enter a Valid Verification Code');
     }
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-self-center px-6 py-28 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
+                <div className='text-left'><BackArrowButton path='/login'/></div>
                 <img
                     className="mx-auto h-28 w-auto content-brandLogo"
                     alt="Your Company"
@@ -82,7 +97,7 @@ export const ForgotPasswordPage = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" onSubmit={verifyCode}>
+            <form className="space-y-6" onSubmit={verifyCode}>
                     <div>
                         <div className="flex items-center justify-between">
                             <label htmlFor="email"
