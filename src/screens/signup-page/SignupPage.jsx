@@ -3,6 +3,8 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import axios from "axios";
 import {Navigate, useNavigate} from "react-router-dom";
 import { GoogleLoginButton } from "../../components/GoogleLoginButton";
+import {SuccessPopup} from "../../components/SuccessPopup";
+import {BackArrowButton} from "../../components/BackArrowButton";
 
 export const SignupPage = () => {
     const navigate = useNavigate();
@@ -10,6 +12,7 @@ export const SignupPage = () => {
         {'username':'','firstName':'','lastName':'','email':'','mobile':'','password':'','address':'','zipCode':''})
     const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
     const [displayErrorBanner,setDisplayErrorBanner] = useState(false);
+    const [successPopup,setSuccessPopup] = useState(false);
     const handleChange = (e) => {
         const { name, value } = e.target; // Destructure the name and value from the event target
         setSignupDetails({
@@ -35,11 +38,12 @@ export const SignupPage = () => {
             });
         console.log(response);
 
-        response.status === 200 ? navigate('/home') : handleSignupError(response.data);
+        response.status === 200 ? setSuccessPopup(true) : handleSignupError(response.data);
     }, [signupDetails]);
     return (
         <div className="flex bg-white min-h-full flex-1 flex-col justify-self-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
+                <div className='text-left'><BackArrowButton path='/login'/></div>
                 <img
                     className="mx-auto h-28 w-auto content-brandLogo"
                     alt="Your Company"
@@ -204,6 +208,7 @@ export const SignupPage = () => {
                 <br />
                 <GoogleLoginButton />
             </div>
+            {successPopup && <SuccessPopup message="Signed Up"/>}
         </div>
     )
 }

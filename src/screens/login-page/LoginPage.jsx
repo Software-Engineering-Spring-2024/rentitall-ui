@@ -4,6 +4,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {HomePage} from "../home-page/HomePage";
 import { GoogleLoginButton } from "../../components/GoogleLoginButton";
+import {BackArrowButton} from "../../components/BackArrowButton";
 
 export const LoginPage = () => {
     const navigate = useNavigate();
@@ -42,18 +43,22 @@ export const LoginPage = () => {
 
     return (
         <div className="flex bg-white min-h-full flex-1 flex-col justify-self-center px-6 py-28 lg:px-8">
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
-                    <img
-                        className="mx-auto h-28 w-auto content-brandLogo"
-                        alt="Your Company"
-                    />
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
+                <div className='text-left'><BackArrowButton path='/home'/></div>
+                <img
+                    className="mx-auto h-28 w-auto content-brandLogo"
+                    alt="Your Company"
+                />
+                <div className='self-center'>
                     <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Sign in to your account
                     </h2>
                 </div>
 
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" onSubmit={login}>
+            </div>
+
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <form className="space-y-6" onSubmit={login}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-left leading-6 text-gray-900">
                                 Email address
@@ -108,8 +113,16 @@ export const LoginPage = () => {
                             </button>
                         </div>
                     </form>
+                <div className="flex items-center pt-2 gap-2">
+                    <label className="text-xs font-medium leading-6 text-gray-900">Don't Have an Account?</label>
+                    <div>
+                        <Link className="font-semibold text-sm text-blue-700 hover:text-blue-500" to='/signup'>Sign Up</Link>
+                    </div>
+                </div>
+                <div>
                     <br></br>
                     <GoogleLoginButton />
+                </div>
                 </div>
         </div>
         
