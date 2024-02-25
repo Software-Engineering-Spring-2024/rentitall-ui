@@ -1,10 +1,12 @@
 import {useCallback, useState} from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import axios from "axios";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import { GoogleLoginButton } from "../../components/GoogleLoginButton";
 import {SuccessPopup} from "../../components/SuccessPopup";
 import {BackArrowButton} from "../../components/BackArrowButton";
+import Constants from "../../Constants";
+import {BsEyeFill, BsEyeSlashFill} from "react-icons/bs";
 
 export const SignupPage = () => {
     const navigate = useNavigate();
@@ -13,6 +15,7 @@ export const SignupPage = () => {
     const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
     const [displayErrorBanner,setDisplayErrorBanner] = useState(false);
     const [successPopup,setSuccessPopup] = useState(false);
+    const [showPassword,setShowPassword] = useState(false);
     const handleChange = (e) => {
         const { name, value } = e.target; // Destructure the name and value from the event target
         setSignupDetails({
@@ -175,24 +178,38 @@ export const SignupPage = () => {
                             />
                         </div>
                     </div>
-
                     <div>
-                        <label htmlFor="password"
-                               className="block text-left text-sm font-medium leading-6 text-gray-900">
+                        <label htmlFor="password" className="block text-sm text-left font-medium leading-6 text-gray-900">
                             Password
                         </label>
-                        <div className="">
+                        <div className="flex gap-2">
+                            {/*<div className="flex-3">*/}
                             <input
                                 id="password"
                                 name="password"
-                                type="password"
+                                pattern={Constants.PASSWORD_REGEX}
+                                type={showPassword ? "text" : "password"}
                                 value={signupDetails.password}
-                                onChange={handleChange}
+                                onChange={(e) => {
+                                    handleChange(e)
+                                }}
                                 placeholder="Enter Your Password"
                                 autoComplete="current-password"
                                 required
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                // onInput={setValidPassword(fa)}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+                                     placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6
+                                     invalid:border-red-600 valid:border-green-800 valid:ring-green-800
+                                     focus:invalid:border-red-600 focus:invalid:ring-red-600 focus:valid:border-green-800"
                             />
+                            {/*</div>*/}
+                            <div>
+                                <a className='align-middle' onClick={() => {
+                                    setShowPassword(!showPassword)
+                                }}>
+                                    {showPassword ? <BsEyeSlashFill size='24'/> : <BsEyeFill size='24'/>}
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -205,8 +222,20 @@ export const SignupPage = () => {
                         </button>
                     </div>
                 </form>
-                <br />
-                <GoogleLoginButton />
+                <div className="flex items-center pt-2 gap-2">
+                    <label className="text-xs font-medium leading-6 text-gray-900">Already Have an Account?</label>
+                    <div>
+                        <Link className="font-semibold text-sm text-blue-700 hover:text-blue-500" to='/login'>Sign
+                            In</Link>
+                    </div>
+                </div>
+                <div className="relative flex py-5 items-center">
+                    <div className="flex-grow border-t border-black"></div>
+                    <span className="flex-shrink mx-4 text-sm font-bold">OR</span>
+                    <div className="flex-grow border-t border-black"></div>
+                </div>
+                <br/>
+                <GoogleLoginButton/>
             </div>
             {successPopup && <SuccessPopup message="Signed Up"/>}
         </div>
