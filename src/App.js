@@ -7,7 +7,9 @@ import {HomePage} from "./screens/home-page/HomePage";
 import {ForgotPasswordPage} from "./screens/forgot-password/ForgotPasswordPage";
 import {ResetPassword} from "./screens/reset-password/ResetPassword";
 import {ProtectedRoute} from "./wrapper/ProtectedRoute";
+import {createContext} from "react";
 
+const UserContext = createContext();
 function App() {
   return (
       <Router>
