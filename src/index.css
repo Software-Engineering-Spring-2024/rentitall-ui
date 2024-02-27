@@ -11,6 +11,16 @@
 /*  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',*/
 /*    monospace;*/
 /*}*/
+@import './variables.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+button, button[type="submit"] {
+    background: var(--button-primary-color);
+    padding: 1rem 2rem;
+    color: var(--text-primary-color);
+    border-radius: 0.4rem;
+    line-height: 1;
+    font-weight: 500;
+}

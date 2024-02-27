@@ -1,27 +1,28 @@
 import axios from "axios";
-import {useCallback, useContext, useEffect, useState} from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import {Link, Navigate, useNavigate} from "react-router-dom";
-import {HomePage} from "../home-page/HomePage";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { HomePage } from "../home-page/HomePage";
 import { GoogleLoginButton } from "../../components/GoogleLoginButton";
-import {BackArrowButton} from "../../components/BackArrowButton";
-import { BsEyeFill,BsEyeSlashFill } from "react-icons/bs";
-import {Alert} from "@mui/material";
-import {FaHome} from "react-icons/fa";
+import { BackArrowButton } from "../../components/BackArrowButton";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { Alert } from "@mui/material";
+import { FaHome } from "react-icons/fa";
 import Constants from "../../Constants";
-import {HomeButton} from "../../components/HomeButton";
+import { HomeButton } from "../../components/HomeButton";
 import LoginDataContext from "../../hooks/LoginDataContext";
-import {useUser} from "../../hooks/UserContext";
+import { useUser } from "../../hooks/UserContext";
+import './../../styles/Login.css'
 
 export const LoginPage = () => {
     const navigate = useNavigate();
-    const [loginDetails,setLoginDetails] = useState({'email':'','password':''});
+    const [loginDetails, setLoginDetails] = useState({ 'email': '', 'password': '' });
     const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-    const [displayErrorBanner,setDisplayErrorBanner] = useState(false);
-    const [displayMessage,setDisplayMessage] = useState('');
-    const [showPassword,setShowPassword] = useState(false);
-    const [isLoading,setIsLoading] = useState(false);
-    const {setLoginData} = useUser();
+    const [displayErrorBanner, setDisplayErrorBanner] = useState(false);
+    const [displayMessage, setDisplayMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const { setLoginData } = useUser();
 
     // useEffect(() => {
     //     const timer = setTimeout(() => {
@@ -40,12 +41,12 @@ export const LoginPage = () => {
         });
 
     };
-    const handleError = (flag,message) => {
+    const handleError = (flag, message) => {
         setDisplayErrorBanner(flag);
         setDisplayMessage(message);
     }
     const handleSuccessfulLogin = () => {
-        const loginData = {isLoggedIn:true,email:loginDetails.email};
+        const loginData = { isLoggedIn: true, email: loginDetails.email };
         setLoginData(loginData);
         navigate('/home');
     }
@@ -57,31 +58,31 @@ export const LoginPage = () => {
                 const response = await axios.post(process.env.REACT_APP_LOGIN_SERVICE + "/login", loginDetails,
                     {
                         headers:
-                            {
-                                "Content-Type": "application/json"
-                            }
+                        {
+                            "Content-Type": "application/json"
+                        }
                     });
                 console.log(response.data);
                 console.log(response);
                 return response.status === 200 ? handleSuccessfulLogin() : handleError(true, response.data.message);
             } catch (error) {
                 console.log(error);
-                if(error.response.status === 400){
-                    handleError(true,error.response.data.message);
+                if (error.response.status === 400) {
+                    handleError(true, error.response.data.message);
                 }
             }
 
         } else {
-            handleError(true,'Invalid Credentials');
+            handleError(true, 'Invalid Credentials');
         }
     };
 
     return (
-        <div className="flex bg-white min-h-full flex-1 flex-col justify-self-center px-6 py-28 lg:px-8">
-            <div className='container bg=gr'>
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
+        <div className="LoginPage">
+            <div className='container'>
+                <div className="login-top-section">
                     <div className='text-left'>
-                        <HomeButton size='20' path='/home'/>
+                        <HomeButton size='20' path='/home' />
                     </div>
                     <img
                         className="mx-auto h-28 w-auto content-brandLogo"
@@ -100,14 +101,13 @@ export const LoginPage = () => {
                     </Alert>
                 </div>}
 
-                <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" onSubmit={login}>
-                        <div>
-                            <label htmlFor="email"
-                                   className="block text-sm font-medium text-left leading-6 text-gray-900">
+                <div className="login-body-section">
+                    <form className="" onSubmit={login}>
+                        <div className="field-wrapper">
+                            <label htmlFor="email" className="">
                                 Email address
                             </label>
-                            <div className="">
+                            <div className="input-wrapper">
                                 <input
                                     id="email"
                                     name="email"
@@ -119,28 +119,14 @@ export const LoginPage = () => {
                                     onChange={(e) => {
                                         handleChange(e)
                                     }}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
-                                focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6
-                                invalid:border-red-600 valid:border-green-800 valid:ring-green-800
-                                focus:invalid:border-red-600 focus:invalid:ring-red-600 focus:valid:border-green-800"
                                 />
                             </div>
                         </div>
-
-                        <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Password
-                                </label>
-                                <div className="text-sm">
-                                    <Link to="/forgot-password"
-                                          className="font-semibold text-blue-700 hover:text-blue-500">
-                                        Forgot password?
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="flex gap-2">
-                                {/*<div className="flex-3">*/}
+                        <div className="field-wrapper">
+                            <label htmlFor="password" className="">
+                                Password
+                            </label>
+                            <div className="input-wrapper">
                                 <input
                                     id="password"
                                     name="password"
@@ -153,48 +139,39 @@ export const LoginPage = () => {
                                     placeholder="Enter Your Password"
                                     autoComplete="current-password"
                                     required
-                                    // onInput={setValidPassword(fa)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
-                                     placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6
-                                     invalid:border-red-600 valid:border-green-800 valid:ring-green-800
-                                     focus:invalid:border-red-600 focus:invalid:ring-red-600 focus:valid:border-green-800"
                                 />
-                                {/*</div>*/}
-                                <div>
-                                    <a className='align-middle' onClick={() => {
-                                        setShowPassword(!showPassword)
+                                <span className="show-or-hide-password-toggle">
+                                    <a onMouseDown={() => {
+                                        setShowPassword(true)
+                                    }} onMouseLeave={() => {
+                                        setShowPassword(false)
+                                    }} onMouseUp={() => {
+                                        setShowPassword(false)
                                     }}>
-                                        {showPassword ? <BsEyeSlashFill size='24'/> : <BsEyeFill size='24'/>}
+                                        {showPassword ? <BsEye size='20' color="white"/> : <BsEyeSlash size='20' color="white"/>}
                                     </a>
-                                </div>
-
+                                </span>
+                                <a href="/forgot-password" className="helper-text">Forgot your password? Click here.</a>
                             </div>
                         </div>
 
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-dark-green px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="login-button"
                             >
                                 Sign in
                             </button>
+                            <a href="/signup" className="helper-text">New to RentItAll. Sign Up now.</a>
                         </div>
                     </form>
-                    <div className="flex items-center pt-2 gap-2">
-                        <label className="text-xs font-medium leading-6 text-gray-900">Don't Have an Account?</label>
-                        <div>
-                            <Link className="font-semibold text-sm text-blue-700 hover:text-blue-500" to='/signup'>Sign
-                                Up</Link>
-                        </div>
-                    </div>
-                    <div className="relative flex py-5 items-center">
-                        <div className="flex-grow border-t border-black"></div>
-                        <span className="flex-shrink mx-4 text-sm font-bold">OR</span>
-                        <div className="flex-grow border-t border-black"></div>
+                    <div className="or-line">
+                        <div className=""></div>
+                        <span className="">OR</span>
+                        <div className=""></div>
                     </div>
                     <div>
-                        <br></br>
-                        <GoogleLoginButton/>
+                        <GoogleLoginButton />
                     </div>
                 </div>
             </div>
