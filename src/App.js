@@ -15,7 +15,7 @@ const UserContext = createContext();
 function App() {
   return (
       <Router>
-          <div className="App h-screen">
+          <div className="App">
               <div className='routes'>
                   <NavBar />
                   <Routes>

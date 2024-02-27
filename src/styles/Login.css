@@ -1,10 +1,27 @@
 .LoginPage {
     display: flex;
     >.container {
-        margin: 4rem auto auto;
+        margin: 4rem auto;
         padding: 1rem;
     }
     .login-top-section {
+        max-width: 480px;
+        margin: auto auto 2rem;
+        .login-company-logo {
+            height: fit-content;
+            width: auto;
+            margin: auto;
+        }
+        .login-title-msg-wrapper {
+            text-align: center;
+        }
+        .login-title-msg {
+            font-weight: 500;
+            font-size: 2.5rem;
+            @media only screen and (max-width: 600px) {
+                font-size: 1.5rem;
+            }
+        }
 
     }
     .login-body-section {

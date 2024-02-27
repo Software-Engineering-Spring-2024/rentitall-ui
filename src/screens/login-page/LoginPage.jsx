@@ -85,13 +85,13 @@ export const LoginPage = () => {
                         <HomeButton size='20' path='/home' />
                     </div>
                     <img
-                        className="mx-auto h-28 w-auto content-brandLogo"
+                        className="login-company-logo content-brandLogo"
                         alt="Your Company"
                     />
-                    <div className='self-center'>
-                        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                    <div className="login-title-msg-wrapper">
+                        <h1 className="login-title-msg">
                             Sign in to your account
-                        </h2>
+                        </h1>
                     </div>
 
                 </div>
