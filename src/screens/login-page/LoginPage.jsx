@@ -79,99 +79,98 @@ export const LoginPage = () => {
 
     return (
         <div className="LoginPage">
-            <div className='container'>
-                <div className="login-top-section">
-                    <div className='text-left'>
-                        <HomeButton size='20' path='/home' />
-                    </div>
-                    <img
-                        className="login-company-logo content-brandLogo"
-                        alt="Your Company"
-                    />
-                    <div className="login-title-msg-wrapper">
-                        <h1 className="login-title-msg">
-                            Sign in to your account
-                        </h1>
-                    </div>
-
-                </div>
-                {displayErrorBanner && <div className="sm:mx-auto sm:w-full sm:max-w-sm pt-8">
-                    <Alert severity="error" className='rounded-3xl'>
-                        {displayMessage}
-                    </Alert>
-                </div>}
-
-                <div className="login-body-section">
-                    <form className="" onSubmit={login}>
-                        <div className="field-wrapper">
-                            <label htmlFor="email" className="">
-                                Email address
-                            </label>
-                            <div className="input-wrapper">
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    value={loginDetails.email}
-                                    autoComplete="email"
-                                    placeholder="Enter Your Email"
-                                    required
-                                    onChange={(e) => {
-                                        handleChange(e)
-                                    }}
-                                />
-                            </div>
+            <div className='login-container'>
+                <div className="login-section">
+                    <div className="login-top-section">
+                        <HomeButton size='20' path='/home' className='back-button'/>
+                        <img
+                            className="company-logo content-brandLogo"
+                            alt="RentItAll"
+                        />
+                        <div className="login-title-msg-wrapper">
+                            <h1 className="login-title-msg">
+                                Sign in to your account
+                            </h1>
                         </div>
-                        <div className="field-wrapper">
-                            <label htmlFor="password" className="">
-                                Password
-                            </label>
-                            <div className="input-wrapper">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    pattern={Constants.PASSWORD_REGEX}
-                                    type={showPassword ? "text" : "password"}
-                                    value={loginDetails.password}
-                                    onChange={(e) => {
-                                        handleChange(e)
-                                    }}
-                                    placeholder="Enter Your Password"
-                                    autoComplete="current-password"
-                                    required
-                                />
-                                <span className="show-or-hide-password-toggle">
-                                    <a onMouseDown={() => {
-                                        setShowPassword(true)
-                                    }} onMouseLeave={() => {
-                                        setShowPassword(false)
-                                    }} onMouseUp={() => {
-                                        setShowPassword(false)
-                                    }}>
-                                        {showPassword ? <BsEye size='20' color="white"/> : <BsEyeSlash size='20' color="white"/>}
-                                    </a>
-                                </span>
-                                <a href="/forgot-password" className="helper-text">Forgot your password? Click here.</a>
-                            </div>
-                        </div>
+                    </div>
 
+                    {displayErrorBanner && <div className="sm:mx-auto sm:w-full sm:max-w-sm pt-8">
+                        <Alert severity="error" className='rounded-3xl'>
+                            {displayMessage}
+                        </Alert>
+                    </div>}
+
+                    <div className="login-body-section">
+                        <form className="" onSubmit={login}>
+                            <div className="field-wrapper">
+                                <label htmlFor="email" className="">
+                                    Email address
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        value={loginDetails.email}
+                                        autoComplete="email"
+                                        placeholder="Enter Your Email"
+                                        required
+                                        onChange={(e) => {
+                                            handleChange(e)
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="password" className="">
+                                    Password
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        pattern={Constants.PASSWORD_REGEX}
+                                        type={showPassword ? "text" : "password"}
+                                        value={loginDetails.password}
+                                        onChange={(e) => {
+                                            handleChange(e)
+                                        }}
+                                        placeholder="Enter Your Password"
+                                        autoComplete="current-password"
+                                        required
+                                    />
+                                    <span className="show-or-hide-password-toggle">
+                                        <a onMouseDown={() => {
+                                            setShowPassword(true)
+                                        }} onMouseLeave={() => {
+                                            setShowPassword(false)
+                                        }} onMouseUp={() => {
+                                            setShowPassword(false)
+                                        }}>
+                                            {showPassword ? <BsEye size='20' color="white" /> : <BsEyeSlash size='20' color="white" />}
+                                        </a>
+                                    </span>
+                                    <a href="/forgot-password" className="helper-text">Forgot your password? Click here.</a>
+                                </div>
+                            </div>
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="login-button"
+                                >
+                                    Sign in
+                                </button>
+                                <a href="/signup" className="helper-text">New to RentItAll. Sign Up now.</a>
+                            </div>
+                        </form>
+                        <div className="or-line">
+                            <div className=""></div>
+                            <span className="">OR</span>
+                            <div className=""></div>
+                        </div>
                         <div>
-                            <button
-                                type="submit"
-                                className="login-button"
-                            >
-                                Sign in
-                            </button>
-                            <a href="/signup" className="helper-text">New to RentItAll. Sign Up now.</a>
+                            <GoogleLoginButton />
                         </div>
-                    </form>
-                    <div className="or-line">
-                        <div className=""></div>
-                        <span className="">OR</span>
-                        <div className=""></div>
-                    </div>
-                    <div>
-                        <GoogleLoginButton />
                     </div>
                 </div>
             </div>
