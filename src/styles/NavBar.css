@@ -1,11 +1,12 @@
 .NavBar {
     padding: 1rem;
-    border-bottom: 1px solid var(--border-light-blue-shade);
+    border-bottom: 2px solid var(--border-light-blue-shade);
     display: flex;
     justify-content: space-between;
     position: sticky;
     top: 0;
     width: 100%;
     background-color: #111a23c8;
+    z-index: 9999;
     /* filter: blur(8px); */
 }
