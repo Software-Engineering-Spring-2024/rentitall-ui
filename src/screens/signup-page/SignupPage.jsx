@@ -1,21 +1,22 @@
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import axios from "axios";
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { GoogleLoginButton } from "../../components/GoogleLoginButton";
-import {SuccessPopup} from "../../components/SuccessPopup";
-import {BackArrowButton} from "../../components/BackArrowButton";
+import { SuccessPopup } from "../../components/SuccessPopup";
+import { BackArrowButton } from "../../components/BackArrowButton";
 import Constants from "../../Constants";
-import {BsEyeFill, BsEyeSlashFill} from "react-icons/bs";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import "./../../styles/SignUp.css"
 
 export const SignupPage = () => {
     const navigate = useNavigate();
-    const [signupDetails,setSignupDetails] = useState(
-        {'username':'','firstName':'','lastName':'','email':'','mobile':'','password':'','address':'','zipCode':''})
+    const [signupDetails, setSignupDetails] = useState(
+        { 'username': '', 'firstName': '', 'lastName': '', 'email': '', 'mobile': '', 'password': '', 'address': '', 'zipCode': '' })
     const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-    const [displayErrorBanner,setDisplayErrorBanner] = useState(false);
-    const [successPopup,setSuccessPopup] = useState(false);
-    const [showPassword,setShowPassword] = useState(false);
+    const [displayErrorBanner, setDisplayErrorBanner] = useState(false);
+    const [successPopup, setSuccessPopup] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const handleChange = (e) => {
         const { name, value } = e.target; // Destructure the name and value from the event target
         setSignupDetails({
@@ -32,212 +33,203 @@ export const SignupPage = () => {
 
     const signup = useCallback(
         async (e) => {
-        e.preventDefault();
-        const response = await axios.post( process.env.REACT_APP_LOGIN_SERVICE+"/signup",signupDetails,
-            {headers:
+            e.preventDefault();
+            const response = await axios.post(process.env.REACT_APP_LOGIN_SERVICE + "/signup", signupDetails,
+                {
+                    headers:
                     {
                         "Content-Type": "application/json"
                     }
-            });
-        console.log(response);
+                });
+            console.log(response);
 
-        response.status === 200 ? setSuccessPopup(true) : handleSignupError(response.data);
-    }, [signupDetails]);
+            response.status === 200 ? setSuccessPopup(true) : handleSignupError(response.data);
+        }, [signupDetails]);
     return (
-        <div className="flex bg-white min-h-full flex-1 flex-col justify-self-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm basis-1">
-                <div className='text-left'><BackArrowButton path='/login'/></div>
-                <img
-                    className="mx-auto h-28 w-auto content-brandLogo"
-                    alt="Your Company"
-                />
-                <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Create a New Account
-                </h2>
-            </div>
-
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" onSubmit={signup}>
-                    <div>
-                        <label className="block text-sm font-medium text-left leading-6 text-gray-900">
-                            Username
-                        </label>
-                        <div className="">
-                            <input
-                                id="username"
-                                name="username"
-                                type="text"
-                                value={signupDetails.username}
-                                placeholder="Enter Your Username"
-                                required
-                                onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
+        <div className="SignUpPage">
+            <div className="signup-container">
+                <div className="signup-section">
+                    <div className="signup-top-section">
+                        <BackArrowButton size='20' className="back-button" path='/login' />
+                        <img
+                            className="company-logo content-brandLogo"
+                            alt="RentItAll"
+                        />
+                        <div className="signup-title-msg-wrapper">
+                            <h1 className="signup-title-msg">
+                                Create a New Account
+                            </h1>
                         </div>
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-left leading-6 text-gray-900">
-                            First Name
-                        </label>
-                        <div className="">
-                            <input
-                                id="firstname"
-                                name="firstName"
-                                type="text"
-                                value={signupDetails.firstName}
-                                placeholder="Enter Your First Name"
-                                required
-                                onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-left leading-6 text-gray-900">
-                            Last Name
-                        </label>
-                        <div className="">
-                            <input
-                                id="lastName"
-                                name="lastName"
-                                type="text"
-                                value={signupDetails.lastName}
-                                placeholder="Enter Your Last Name"
-                                required
-                                onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-left leading-6 text-gray-900">
-                            Email address
-                        </label>
-                        <div className="">
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                value={signupDetails.email}
-                                autoComplete="email"
-                                placeholder="Enter Your Email"
-                                required
-                                onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-left leading-6 text-gray-900">
-                            Mobile Number
-                        </label>
-                        <div className="">
-                            <input
-                                id="mobile"
-                                name="mobile"
-                                type="tel"
-                                value={signupDetails.mobile}
-                                placeholder="Enter Your Mobile Number"
-                                required
-                                onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-left leading-6 text-gray-900">
-                            Address
-                        </label>
-                        <div className="">
-                            <input
-                                id="address"
-                                name="address"
-                                type="text"
-                                value={signupDetails.address}
-                                placeholder="Enter Your Address"
-                                required
-                                onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-left leading-6 text-gray-900">
-                            Zip Code
-                        </label>
-                        <div className="">
-                            <input
-                                id="zipCode"
-                                name="zipCode"
-                                type="number"
-                                value={signupDetails.zipCode}
-                                placeholder="Enter Your Zip Code"
-                                required
-                                onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm text-left font-medium leading-6 text-gray-900">
-                            Password
-                        </label>
-                        <div className="flex gap-2">
-                            {/*<div className="flex-3">*/}
-                            <input
-                                id="password"
-                                name="password"
-                                pattern={Constants.PASSWORD_REGEX}
-                                type={showPassword ? "text" : "password"}
-                                value={signupDetails.password}
-                                onChange={(e) => {
-                                    handleChange(e)
-                                }}
-                                placeholder="Enter Your Password"
-                                autoComplete="current-password"
-                                required
-                                // onInput={setValidPassword(fa)}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
-                                     placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6
-                                     invalid:border-red-600 valid:border-green-800 valid:ring-green-800
-                                     focus:invalid:border-red-600 focus:invalid:ring-red-600 focus:valid:border-green-800"
-                            />
-                            {/*</div>*/}
-                            <div>
-                                <a className='align-middle' onClick={() => {
-                                    setShowPassword(!showPassword)
-                                }}>
-                                    {showPassword ? <BsEyeSlashFill size='24'/> : <BsEyeFill size='24'/>}
-                                </a>
+                    <div className="signup-body-section">
+                        <form className="" onSubmit={signup}>
+                            <div className="field-wrapper">
+                                <label htmlFor="username" className="">
+                                    Username
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="username"
+                                        name="username"
+                                        type="text"
+                                        value={signupDetails.username}
+                                        placeholder="Enter Your Username"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
                             </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="firstname" className="">
+                                    First Name
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="firstname"
+                                        name="firstName"
+                                        type="text"
+                                        value={signupDetails.firstName}
+                                        placeholder="Enter Your First Name"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="lastname" className="">
+                                    Last Name
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="lastName"
+                                        name="lastName"
+                                        type="text"
+                                        value={signupDetails.lastName}
+                                        placeholder="Enter Your Last Name"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="email" className="">
+                                    Email address
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        value={signupDetails.email}
+                                        autoComplete="email"
+                                        placeholder="Enter Your Email"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="mobile" className="">
+                                    Mobile Number
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="mobile"
+                                        name="mobile"
+                                        type="tel"
+                                        value={signupDetails.mobile}
+                                        placeholder="Enter Your Mobile Number"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="address" className="">
+                                    Address
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="address"
+                                        name="address"
+                                        type="text"
+                                        value={signupDetails.address}
+                                        placeholder="Enter Your Address"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="zipCode" className="">
+                                    Zip Code
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="zipCode"
+                                        name="zipCode"
+                                        type="number"
+                                        value={signupDetails.zipCode}
+                                        placeholder="Enter Your Zip Code"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="field-wrapper">
+                                <label htmlFor="password" className="">
+                                    Password
+                                </label>
+                                <div className="input-wrapper">
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        pattern={Constants.PASSWORD_REGEX}
+                                        type={showPassword ? "text" : "password"}
+                                        value={signupDetails.password}
+                                        onChange={(e) => {
+                                            handleChange(e)
+                                        }}
+                                        placeholder="Enter Your Password"
+                                        autoComplete="current-password"
+                                        required                                        
+                                    />
+                                    <span className="show-or-hide-password-toggle">
+                                        <a onMouseDown={() => {
+                                            setShowPassword(true)
+                                        }} onMouseLeave={() => {
+                                            setShowPassword(false)
+                                        }} onMouseUp={() => {
+                                            setShowPassword(false)
+                                        }}>
+                                            {showPassword ? <BsEye size='20' color="white" /> : <BsEyeSlash size='20' color="white" />}
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="signup-button"
+                                >
+                                    Sign Up
+                                </button>
+                                <a href="/login" className="helper-text">Already Have an Account? Sign In.</a>
+                            </div>
+                        </form>
+                        <div className="or-line">
+                            <div className=""></div>
+                            <span className="">OR</span>
+                            <div className=""></div>
+                        </div>
+                        <div>
+                            <GoogleLoginButton />
                         </div>
                     </div>
-
-                    <div>
-                        <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-dark-green px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            Sign Up
-                        </button>
-                    </div>
-                </form>
-                <div className="flex items-center pt-2 gap-2">
-                    <label className="text-xs font-medium leading-6 text-gray-900">Already Have an Account?</label>
-                    <div>
-                        <Link className="font-semibold text-sm text-blue-700 hover:text-blue-500" to='/login'>Sign
-                            In</Link>
-                    </div>
                 </div>
-                <div className="relative flex py-5 items-center">
-                    <div className="flex-grow border-t border-black"></div>
-                    <span className="flex-shrink mx-4 text-sm font-bold">OR</span>
-                    <div className="flex-grow border-t border-black"></div>
-                </div>
-                <br/>
-                <GoogleLoginButton/>
             </div>
-            {successPopup && <SuccessPopup message="Signed Up"/>}
+            {successPopup && <SuccessPopup message="Signed Up" />}
         </div>
     )
 }
