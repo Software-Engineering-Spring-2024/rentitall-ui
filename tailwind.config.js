@@ -10,7 +10,7 @@ module.exports = {
         "dark-grey": "#757575",
       },
       content:{
-        brandLogo: "url('./assets/rentitall-logo.png')",
+        brandLogo: "url('./assets/rentitall-logo.jpg')",
         loginBg: "url('./assets/login-bg.png')",
       },
     },

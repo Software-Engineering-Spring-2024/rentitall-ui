@@ -931,7 +931,7 @@ select {
 }
 
 .content-brandLogo {
-  --tw-content: url('./assets/rentitall-logo.png');
+  --tw-content: url('./assets/rentitall-logo.jpg');
   content: var(--tw-content);
 }
 
