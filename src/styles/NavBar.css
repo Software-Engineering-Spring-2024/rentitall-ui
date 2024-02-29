@@ -8,5 +8,9 @@
     width: 100%;
     background-color: #111a23c8;
     z-index: 9999;
-    /* filter: blur(8px); */
+    
+    .navbar-company-logo {
+        height: 3rem;
+        cursor: pointer;
+    }
 }
