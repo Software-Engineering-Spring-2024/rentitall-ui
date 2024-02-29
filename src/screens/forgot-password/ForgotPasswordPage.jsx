@@ -98,7 +98,7 @@ export const ForgotPasswordPage = () => {
                         />
                         <div className="forgot-password-title-msg-wrapper">
                             <h1 className="forgot-password-title-msg">
-                                Create a New Account
+                                Forgot Your Password?
                             </h1>
                         </div>
                     </div>
