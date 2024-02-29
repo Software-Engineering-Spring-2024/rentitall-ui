@@ -24,3 +24,7 @@ button, button[type="submit"] {
     line-height: 1;
     font-weight: 500;
 }
+
+.error-message {
+    color: var(--error-text-color)
+}
