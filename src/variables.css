@@ -1,0 +1,19 @@
+:root {
+    /* background */
+    --dark-blue-shade: #111A23;
+    --border-light-blue-shade: #1E2D3A;
+    --dim-dark-blue-shade: #1B2632;
+    --input-border-color: #263E4F;
+
+    /* button */
+    --button-primary-color: #1A80E6;
+
+
+
+    /* text */
+    --text-primary-color: white;
+    --text-secondary-color: #98A9B6;
+    --input-placeholder-color: #97ACC7;
+    --text-action-color: #00e2e6;
+    --error-text-color: red;
+}

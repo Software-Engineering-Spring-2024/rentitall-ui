@@ -7,20 +7,20 @@ export const HomeButton = (props) => {
 
     const navigate = useNavigate();
     return (
-        <div>
+        <div className={props.className}>
             <button
                 onClick={() => navigate(props.path)}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className="inline bg-transparent hover:bg-black transition-colors duration-300 rounded-full"
+                className="bg-transparent p-0"
             >
                 <FaHome
-                    color={isHovered ? 'white' : 'black'}
+                    // color={isHovered ? 'white' : 'black'}
+                    // color={props.color || 'white'}
                     size='28'
                     className="transition-colors duration-300"
                 />
             </button>
-
         </div>
     )
 }
