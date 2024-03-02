@@ -28,3 +28,136 @@ button, button[type="submit"] {
 .error-message {
     color: var(--error-text-color)
 }
+
+
+.container {
+    display: flex;
+    height: 100vh; /* Make the container fill the entire viewport height */
+}
+.left-section, .right-section {
+    flex: 1; /* Each section takes up equal space */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    border: 1px solid #210202; /* Add a border for visual separation */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #08012e;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.deal-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+.deal-item:hover {
+    background-color: #e0e0e0;
+}
+
+.deal-name {
+    font-weight: bold;
+}
+
+.top-deal {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+.top-deal:hover {
+    background-color: #e0e0e0;
+}
+
+.deal-price {
+    font-size: 18px;
+    color: #007bff;
+}
+footer {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 50px 0;
+    font-family: 'Merriweather', serif;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-info,
+.social-media {
+    flex: 1;
+}
+
+.footer-info h3,
+.social-media h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.footer-info p {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.social-media ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.social-media ul li {
+    margin-right: 20px;
+}
+
+.social-media ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+.social-media ul li a:hover {
+    transform: translateY(-5px);
+}
+
+/* Fantasy icon styles */
+.fa-facebook-f,
+.fa-twitter,
+.fa-instagram {
+    font-size: 32px;
+}
+
+.map {
+    width: 100%;
+    height: 200px;
+    margin-top: 20px;
+}
