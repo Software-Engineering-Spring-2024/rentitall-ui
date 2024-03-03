@@ -13,4 +13,9 @@
         height: 3rem;
         cursor: pointer;
     }
+    .navbar-actions {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
 }

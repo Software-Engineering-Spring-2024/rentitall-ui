@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
 import './../styles/NavBar.css'
 
-export const NavBar = () => {
+export const NavBar = (props) => {
     const navigate = useNavigate();
     const goToLoginPage = useCallback(() => {
         navigate('/login')
@@ -19,11 +19,16 @@ export const NavBar = () => {
                     alt="RentItAll"
                 />
             </div>
-            <button
-                onClick={goToLoginPage}
-            >
-                Sign in
-            </button>
+            <div className="navbar-actions">
+                <button onClick={props.handleProductListModal} className='secondary-button'>
+                    List your item
+                </button>
+                <button
+                    onClick={goToLoginPage}
+                >
+                    Sign in
+                </button>
+            </div>
         </div>
     )
 }
