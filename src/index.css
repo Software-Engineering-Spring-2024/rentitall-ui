@@ -191,6 +191,7 @@ footer {
 
 #frame1:checked~#slides .inner {
     margin-left: 0;
+    
 }
 
 #frame2:checked~#slides .inner {

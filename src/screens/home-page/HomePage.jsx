@@ -13,22 +13,22 @@ export const HomePage = () => {
                         <div class="inner">
                             <div class="frame frame_1">
                                 <div class="frame-content">
-                                    <img src="\rentitall-ui\src\assets\rentitall-logo.jpg" alt="Slide 1" />
+                                    <img src="closedeal.jpg" alt="Slide 1" />
                                 </div>
                             </div>
                             <div class="frame frame_2">
                                 <div class="frame-content">
-                                    <img src="rentitall-logo.jpg" alt="Slide 2" />
+                                    <img src="coin-image.jpg" alt="Slide 2" />
                                 </div>
                             </div>
                             <div class="frame frame_3">
                                 <div class="frame-content">
-                                    <img src="rentitall-logo.jpg" alt="Slide 3" />
+                                    <img src="deal.jpg" alt="Slide 3" />
                                 </div>
                             </div>
                             <div class="frame frame_4">
                                 <div class="frame-content">
-                                    <img src="rentitall-logo.jpg" alt="Slide 4" />
+                                    <img src="deal2.jpg" alt="Slide 4" />
                                 </div>
                             </div>
                         </div>
