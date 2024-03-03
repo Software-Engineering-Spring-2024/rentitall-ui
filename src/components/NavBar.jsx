@@ -1,14 +1,20 @@
 import { useCallback } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
 import './../styles/NavBar.css'
+import { useUser } from '../hooks/UserContext';
 
 export const NavBar = (props) => {
     const navigate = useNavigate();
+    const { loginData, logOutUser } = useUser();
     const goToLoginPage = useCallback(() => {
         navigate('/login')
     })
     const goToHomePage = useCallback(() => {
         navigate('/')
+    })
+    const handleLogout = useCallback(async() => {
+        await logOutUser()
+        goToHomePage()
     })
 
     return (
@@ -23,11 +29,21 @@ export const NavBar = (props) => {
                 <button onClick={props.handleProductListModal} className='secondary-button'>
                     List your item
                 </button>
-                <button
-                    onClick={goToLoginPage}
-                >
-                    Sign in
-                </button>
+                {
+                    loginData.isLoggedIn ? (
+                        <button
+                            onClick={handleLogout}
+                        >
+                            Sign Out
+                        </button>
+                    ) : (
+                        <button
+                            onClick={goToLoginPage}
+                        >
+                            Sign In
+                        </button>
+                    )
+                }
             </div>
         </div>
     )
