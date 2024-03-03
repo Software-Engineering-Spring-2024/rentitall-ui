@@ -13,6 +13,7 @@ import { HomeButton } from "../../components/HomeButton";
 import LoginDataContext from "../../hooks/LoginDataContext";
 import { useUser } from "../../hooks/UserContext";
 import './../../styles/Login.css'
+import Cookies from 'js-cookie';
 
 export const LoginPage = () => {
     const navigate = useNavigate();
@@ -45,7 +46,8 @@ export const LoginPage = () => {
         setDisplayErrorBanner(flag);
         setDisplayMessage(message);
     }
-    const handleSuccessfulLogin = () => {
+    const handleSuccessfulLogin = (token) => {
+        Cookies.set('user_jwtToken', token, { expires: 1/24 });
         const loginData = { isLoggedIn: true, email: loginDetails.email };
         setLoginData(loginData);
         navigate('/home');
@@ -64,7 +66,7 @@ export const LoginPage = () => {
                     });
                 console.log(response.data);
                 console.log(response);
-                return response.status === 200 ? handleSuccessfulLogin() : handleError(true, response.data.message);
+                return response.status === 200 ? handleSuccessfulLogin(response.data.token) : handleError(true, response.data.message);
             } catch (error) {
                 console.log(error);
                 if (error.response.status === 400) {
