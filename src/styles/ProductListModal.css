@@ -87,3 +87,8 @@
         width: 100%;
     }
 }
+
+.sign-in-section {
+    margin-top: 1rem;
+    display: flex;
+}
