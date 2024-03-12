@@ -1,0 +1,66 @@
+#Homepage {
+    section {
+        position: relative;
+        padding: 0 2.5rem;
+
+        .wave-curve {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .wave-curve svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 129px;
+        }
+
+        .wave-curve .shape-fill {
+            fill: #194A88;
+        }
+    }
+
+    section:first-child {
+        position: relative;
+        width: 100%;
+        height: calc(100vh - 5.375rem);
+        overflow: hidden;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+
+        h1 {
+            font-size: 5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+    }
+
+    .video-hero {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+
+    .welcome-content {
+        position: relative;
+        z-index: 1;
+        font-weight: bold;
+
+        .actions-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+        }
+    }
+}

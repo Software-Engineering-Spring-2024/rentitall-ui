@@ -22,22 +22,21 @@ function App() {
         <Router>
             <div className="App">
                 <div className='routes'>
-                    <NavBar handleProductListModal={toggleModal}/>
+                    <NavBar handleProductListModal={toggleModal} />
                     <Routes>
                         <Route exact path='/' element={<Navigate to='/home' />} />
                         <Route exact path='/login' element={<LoginPage />} />
                         <Route exact path='/signup' element={<SignupPage />} />
-                        <Route exact path='/home' element={<HomePage />} />
+                        <Route exact path='/home' element={<HomePage handleProductListModal={toggleModal} />} />
                         <Route exact path='/forgot-password' element={<ForgotPasswordPage />} />
                         <Route exact path='/reset-password' element={
                             <ProtectedRoute><ResetPassword /></ProtectedRoute>
                         } />
                     </Routes>
-                    <ProductListModal show={showModal} closeModal={toggleModal}/>
+                    <ProductListModal show={showModal} closeModal={toggleModal} />
                 </div>
             </div>
         </Router>
-
     );
 }
 
