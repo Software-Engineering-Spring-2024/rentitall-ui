@@ -1,6 +1,29 @@
+import { useEffect, useState } from 'react'
 import './../../styles/HomePage.css'
+import axios from 'axios'
+import { IoMdCar } from "react-icons/io";
+import { LuLaptop2 } from "react-icons/lu";
+import { GiClothes, GiSofa } from "react-icons/gi";
+import { BsThreeDots } from "react-icons/bs";
 
 export const HomePage = (props) => {
+    const [categories, setCategories] = useState([])
+
+    useEffect(() => {
+        const getAvailableCategories = async () => {
+            try {
+                const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/categories");
+                console.log("getAvailableCategories response", response?.data?.data)
+                const availableCategories = response.data.data
+                setCategories(availableCategories)
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getAvailableCategories();
+    }, [])
+
     return (
         <div id="Homepage">
             <section>
@@ -22,25 +45,40 @@ export const HomePage = (props) => {
                     {/* <h2>Get Started Today!</h2>
                     <p>Whether you're looking to rent something or have items to rent out, RentItAll is your one-stop destination. Join our vibrant community and unlock the potential of collaborative consumption today.</p> */}
                     <div className='actions-wrapper'>
-                        <button>
+                        <button className='floating-animation'>
                             Explore Rentals
                         </button>
-                        <button className='secondary-button' onClick={props.handleProductListModal}>
+                        <button className='secondary-button floating-animation' onClick={props.handleProductListModal}>
                             List Your Items
                         </button>
                     </div>
                 </div>
             </section>
-            {/* <section>
-                <div className="rent-by-category">
-                    Categories
+            <section>
+                <div className="see-available-categories">
+                    <h1 className='title'>See Available Categories</h1>
+                    <ul className='categories-list'>
+                        {categories.map(category =>
+                            <li key={category.id}>
+                                <div className='category-tile'>
+                                    <a className='category-icon'>
+                                        {category.name === 'Electronics' && <LuLaptop2 size='32' />}
+                                        {category.name === 'Furniture' && <GiSofa size='32' />}
+                                        {category.name === 'Vehicles' && <IoMdCar size='32' />}
+                                        {category.name === 'Fashion' && <GiClothes size='32' />}
+                                        {category.name === 'Others' && <BsThreeDots size='32' />}
+                                    </a>
+                                    {category.name}
+                                </div>
+                            </li>)}
+                    </ul>
                 </div>
             </section>
             <section>
                 <div className='products-section'>
                     Products
                 </div>
-            </section> */}
+            </section>
         </div>
     )
 }

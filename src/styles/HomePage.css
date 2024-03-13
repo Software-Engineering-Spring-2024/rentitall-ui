@@ -21,14 +21,14 @@
         }
 
         .wave-curve .shape-fill {
-            fill: #194A88;
+            fill: var(--dark-blue-shade);
         }
     }
 
     section:first-child {
         position: relative;
         width: 100%;
-        height: calc(100vh - 5.375rem);
+        min-height: calc(100vh - 5.375rem);
         overflow: hidden;
         padding-top: 2rem;
         padding-bottom: 2rem;
@@ -61,6 +61,81 @@
             display: flex;
             flex-direction: row;
             gap: 0.5rem;
+        }
+    }
+
+    @-webkit-keyframes float {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .floating-animation {
+        -webkit-animation: float 3s ease-in-out infinite;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .see-available-categories {
+        margin: 0 auto;
+        padding: 3rem 0 5rem;
+        max-width: 50rem;
+
+        .title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        ul.categories-list {
+            display: flex;
+            justify-content: space-between;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+
+            >li:not(:last-child) {
+                margin-right: 1rem;
+            }
+
+            .category-tile {
+                padding: 1.5rem;
+                width: 8.5rem;
+                background-color: var(--secondary-bluish-green-color);
+                border-radius: 0.5rem;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .category-icon {
+                /* margin-bottom: 0.5rem; */
+                margin: 0 auto 0.5rem;
+                transition: top .3s ease-in-out;
+                text-align: -webkit-center;
+                /* text-align: center; */
+            }
         }
     }
 }
