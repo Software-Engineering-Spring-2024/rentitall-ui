@@ -76,7 +76,12 @@ export const HomePage = (props) => {
             </section>
             <section>
                 <div className='products-section'>
-                    Products
+                    <h1 className='title'>Products</h1>
+                    <div className='products-list'>
+                        <div className="product-card"></div>
+                        <div className="product-card"></div>
+                        <div className="product-card"></div>
+                    </div>
                 </div>
             </section>
         </div>

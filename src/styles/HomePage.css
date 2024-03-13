@@ -3,6 +3,13 @@
         position: relative;
         padding: 0 2.5rem;
 
+        .title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 2rem;
+        }
+
         .wave-curve {
             position: absolute;
             bottom: 0;
@@ -21,7 +28,7 @@
         }
 
         .wave-curve .shape-fill {
-            fill: var(--dark-blue-shade);
+            fill: var(--dark-teal-theme);
         }
     }
 
@@ -102,13 +109,6 @@
         padding: 3rem 0 5rem;
         max-width: 50rem;
 
-        .title {
-            font-size: 1.75rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
         ul.categories-list {
             display: flex;
             justify-content: space-between;
@@ -123,18 +123,34 @@
             .category-tile {
                 padding: 1.5rem;
                 width: 8.5rem;
-                background-color: var(--secondary-bluish-green-color);
+                background-color: var(--button-primary-text-color);
                 border-radius: 0.5rem;
                 text-align: center;
                 cursor: pointer;
+                overflow: hidden;
+                transition: background-color .3s ease-in-out;
+            }
+            .category-tile:hover .category-icon>svg {
+                transform: translateY(-0.5rem);
             }
 
             .category-icon {
-                /* margin-bottom: 0.5rem; */
+                position: relative;
                 margin: 0 auto 0.5rem;
-                transition: top .3s ease-in-out;
                 text-align: -webkit-center;
                 /* text-align: center; */
+            }
+            .category-icon>svg {
+                transition: transform .1s ease-in-out;
+            }
+        }
+    }
+
+    .products-section {
+        .products-list {
+
+            .product-card {
+                padding: 2rem;
             }
         }
     }
