@@ -1,6 +1,6 @@
 :root {
     /* background */
-    --dark-blue-shade: #111A23;
+    --dark-teal-theme: #003239;
     --border-light-blue-shade: #1E2D3A;
     --dim-dark-blue-shade: #1B2632;
     --input-border-color: #263E4F;
@@ -8,8 +8,11 @@
     --secondary-bluish-green-color: #00a3ad;
 
     /* button */
-    --button-primary-color: #1A80E6;
+    --button-primary-color: #fdcc08;
+    --button-primary-hover-color: #ffe200;
     --button-secondary-color: #1a80e63c;
+    --button-primary-text-color: black;
+    --black-hover-background-color: #111111;
 
 
 

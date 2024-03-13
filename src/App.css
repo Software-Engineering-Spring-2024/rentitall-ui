@@ -2,7 +2,7 @@
 
 .App {
   /* text-align: center; */
-  background: var(--dark-blue-shade);
+  background: var(--dark-teal-theme);
   color: var(--text-primary-color);
   height: 100%;
   min-height: 100vh;
