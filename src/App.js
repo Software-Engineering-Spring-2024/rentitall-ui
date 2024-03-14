@@ -9,6 +9,7 @@ import { ResetPassword } from "./screens/reset-password/ResetPassword";
 import { ProtectedRoute } from "./wrapper/ProtectedRoute";
 import { createContext, useCallback, useState } from "react";
 import { NavBar } from "./components/NavBar";
+import { Footer } from "./components/Footer";
 import { ProductListModal } from './components/ProductListModal';
 
 const UserContext = createContext();
@@ -33,6 +34,7 @@ function App() {
                             <ProtectedRoute><ResetPassword /></ProtectedRoute>
                         } />
                     </Routes>
+                    <Footer />
                     <ProductListModal show={showModal} closeModal={toggleModal} />
                 </div>
             </div>

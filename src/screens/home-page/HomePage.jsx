@@ -5,9 +5,13 @@ import { IoMdCar } from "react-icons/io";
 import { LuLaptop2 } from "react-icons/lu";
 import { GiClothes, GiSofa } from "react-icons/gi";
 import { BsThreeDots } from "react-icons/bs";
+import img_placeholder from "./../../assets/Img-Placeholder.png"
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 export const HomePage = (props) => {
     const [categories, setCategories] = useState([])
+    const [products, setProducts] = useState([])
+    const isNotSmallScreen = useMediaQuery("(min-width: 768px")
 
     useEffect(() => {
         const getAvailableCategories = async () => {
@@ -21,7 +25,27 @@ export const HomePage = (props) => {
                 console.log(error)
             }
         }
+        const getProductsList = async () => {
+            try {
+                const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/product-list");
+                console.log("getProductsList response", response?.data?.data)
+                const products_list = response.data.data
+                const new_products_list = products_list.map(product => {
+                    // if(product.image[0] == '/') {
+                    //     const image = 'data:image/jpeg;base64,' + product.image
+                    //     console.log(image)
+                    //     product.image = image
+                    // }
+                    return product
+                })
+                setProducts(new_products_list)
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
         getAvailableCategories();
+        getProductsList();
     }, [])
 
     return (
@@ -70,20 +94,36 @@ export const HomePage = (props) => {
                                     </a>
                                     {category.name}
                                 </div>
-                            </li>)}
+                            </li>
+                        )}
                     </ul>
                 </div>
             </section>
             <section>
                 <div className='products-section'>
-                    <h1 className='title'>Products</h1>
+                    <h1 className='title'>Rental Items</h1>
                     <div className='products-list'>
-                        <div className="product-card"></div>
-                        <div className="product-card"></div>
-                        <div className="product-card"></div>
+                        {
+                            products.map(product =>
+                                <div key={product.product_id} className="product-card">
+                                    <div className='product-img-wrapper'>
+                                        <img src={product.image} alt={product.title} onError={(e) => { e.target.onerror = null; e.target.src = img_placeholder; }} />
+                                    </div>
+                                    <div className='product-info'>
+                                        <span className='product-category'>{categories.find(category => category.id === product.category_id).name || ''}</span>
+                                        <p className='product-name'>{product.title}</p>
+                                    </div>
+                                    <div className='product-price'>${product.price_per_day}/day</div>
+                                </div>
+                            )
+                        }
+                    </div>
+                    <div className='explore-more-rentals'>
+                        <button>Explore more rental items</button>
                     </div>
                 </div>
             </section>
+            {isNotSmallScreen && <div className='spacer layered-wave'></div>}
         </div>
     )
 }
