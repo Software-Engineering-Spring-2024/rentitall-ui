@@ -9,7 +9,7 @@
         width: 100%;
         margin: auto;
         padding: 3rem 1rem;
-        border: 2px solid var(--border-light-blue-shade);
+        border: 2px solid var(--text-action-color);
         border-radius: 0.5rem;
         position: relative;
     }
@@ -19,6 +19,9 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
+            button:hover {
+                background-color: transparent;
+            }
             svg {
                 color: var(--input-placeholder-color);
             }

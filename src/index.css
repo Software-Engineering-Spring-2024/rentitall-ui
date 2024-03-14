@@ -20,7 +20,7 @@ button, button[type="submit"] {
     background: var(--button-primary-color);
     padding: 1rem 2rem;
     color: var(--button-primary-text-color);
-    border-radius: 0.4rem;
+    border-radius: 0.3rem;
     line-height: 1;
     font-weight: 500;
 }
