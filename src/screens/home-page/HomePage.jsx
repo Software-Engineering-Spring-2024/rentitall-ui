@@ -7,6 +7,10 @@ import { GiClothes, GiSofa } from "react-icons/gi";
 import { BsThreeDots } from "react-icons/bs";
 import img_placeholder from "./../../assets/Img-Placeholder.png"
 import useMediaQuery from '../../hooks/useMediaQuery';
+import listing_img from './../../assets/Effortless Listing Process.png'
+import inspection_img from './../../assets/Quality Inspected Rentals.png'
+import support_img from './../../assets/Round-the-Clock Assistance.png'
+import calender_img from './../../assets/Flexible Renting Choices.png'
 
 export const HomePage = (props) => {
     const [categories, setCategories] = useState([])
@@ -78,6 +82,7 @@ export const HomePage = (props) => {
                     </div>
                 </div>
             </section>
+            {/* <section className=""></section> */}
             <section>
                 <div className="see-available-categories">
                     <h1 className='title'>See Available Categories</h1>
@@ -110,7 +115,7 @@ export const HomePage = (props) => {
                                         <img src={product.image} alt={product.title} onError={(e) => { e.target.onerror = null; e.target.src = img_placeholder; }} />
                                     </div>
                                     <div className='product-info'>
-                                        <span className='product-category'>{categories.find(category => category.id === product.category_id).name || ''}</span>
+                                        <span className='product-category'>{categories.find(category => category.id === product.category_id)?.name || ''}</span>
                                         <p className='product-name'>{product.title}</p>
                                     </div>
                                     <div className='product-price'>${product.price_per_day}/day</div>
@@ -124,6 +129,33 @@ export const HomePage = (props) => {
                 </div>
             </section>
             {isNotSmallScreen && <div className='spacer layered-wave'></div>}
+            <section>
+                <div className='why-us'>
+                    <h1 className='title'>Why Choose RentItAll?</h1>
+                    <div className='why-us-panel'>
+                        <div className="why-us-each-section">
+                            <img src={inspection_img} alt="Quality Inspected Rentals" />
+                            <h5>Quality Inspected Rentals</h5>
+                            <p>Every listed item goes through a meticulous inspection to guarantee your satisfaction. Rent with confidence knowing that RentItAll ensures a premium rental experience with every item.</p>
+                        </div>
+                        <div className="why-us-each-section">
+                            <img src={listing_img} alt="Effortless Listing Process" />
+                            <h5>Effortless Listing Process</h5>
+                            <p>List your items with ease and start earning. Our simple listing tool allows you to upload your products in minutes. We handle the logistics, you enjoy the benefits.</p>
+                        </div>
+                        <div className="why-us-each-section">
+                            <img src={calender_img} alt="Flexible Renting Choices" />
+                            <h5>Flexible Renting Choices</h5>
+                            <p>Choose from a wide range of items to rent at competitive prices. Whether you need it for a day, a week, or longer, we've got you covered with flexible rental terms.</p>
+                        </div>
+                        <div className="why-us-each-section">
+                            <img src={support_img} alt="Round-the-Clock Assistance" />
+                            <h5>Round-the-Clock Assistance</h5>
+                            <p>Our customer care doesn’t clock out. Whether you're renting out or renting in, our support team is here for you 24/7 to help with any questions or concerns.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     )
 }

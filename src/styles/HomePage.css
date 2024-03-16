@@ -216,13 +216,44 @@
         }
     }
 
+    .why-us {
+        margin-top: 5rem;
+        .title {
+            @media only screen and (min-width: 1024px) {
+                border-bottom: 2px solid;
+                margin-bottom: 1rem;
+            }
+        }
+        .why-us-panel {
+            @media only screen and (max-width: 1023px) {
+                text-align: center;
+            }
+            @media only screen and (min-width: 1024px) {
+                display: flex;
+                gap: 1rem;
+            }
+            .why-us-each-section {
+                margin: 1rem 0 1.875rem;
+                text-align: -webkit-center;
+                img {
+                    margin-bottom: 1rem;
+                }
+                h5 {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 0.625rem;
+                }
+            }
+        }
+    }
+
     .spacer {
         aspect-ratio: 960/300;
         width: 100%;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-        margin-bottom: -5rem;
+        /* margin-bottom: -5rem; */
         @media only screen and (min-width: 768px) {
             margin-top: -200px;
         }
