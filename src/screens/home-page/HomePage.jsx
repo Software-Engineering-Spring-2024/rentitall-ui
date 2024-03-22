@@ -17,7 +17,7 @@ import {FaLocationDot} from "react-icons/fa6";
 
 export const HomePage = (props) => {
     const [categories, setCategories] = useState([])
-    const [products, setProducts] = useState([])
+    const [latestProducts, setLatestProducts] = useState([])
     const [openProductPopup, setOpenProductPopup] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const isNotSmallScreen = useMediaQuery("(min-width: 768px")
@@ -40,12 +40,12 @@ export const HomePage = (props) => {
                 console.log(error)
             }
         }
-        const getProductsList = async () => {
+        const getLatestProductsList = async () => {
             try {
-                const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/product-list");
-                console.log("getProductsList response", response?.data?.data)
-                const products_list = response.data.data
-                const new_products_list = products_list.map(product => {
+                const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/latest-products-list");
+                console.log("getLatestProductsList response", response?.data?.data)
+                const latest_products_list = response.data.data
+                const new_latest_products_list = latest_products_list.map(product => {
                     // if(product.image[0] == '/') {
                     //     const image = 'data:image/jpeg;base64,' + product.image
                     //     console.log(image)
@@ -53,14 +53,14 @@ export const HomePage = (props) => {
                     // }
                     return product
                 })
-                setProducts(new_products_list)
+                setLatestProducts(new_latest_products_list)
 
             } catch (error) {
                 console.log(error)
             }
         }
         getAvailableCategories();
-        getProductsList();
+        getLatestProductsList();
     }, [])
 
     return (
@@ -118,23 +118,23 @@ export const HomePage = (props) => {
             </section>
             <section>
                 <div className='products-section'>
-                    <h1 className='title'>Rental Items</h1>
+                    <h1 className='title'>Latest Rental Items</h1>
                     <div className='products-list'>
                         {
-                            products.map(product =>
-                                <div key={product.product_id} className="product-card" onClick={() => {handleProductPopup(product)}}>
+                            latestProducts.map(latestProduct =>
+                                <div key={latestProduct.product_id} className="product-card" onClick={() => {handleProductPopup(latestProduct)}}>
                                     <div className='product-img-wrapper'>
-                                        <img src={product.image} alt={product.title} onError={(e) => { e.target.onerror = null; e.target.src = img_placeholder; }} />
+                                        <img src={latestProduct.image} alt={latestProduct.title} onError={(e) => { e.target.onerror = null; e.target.src = img_placeholder; }} />
                                     </div>
                                     <div className='product-info'>
-                                        <span className='product-category'>{categories.find(category => category.id === product.category_id)?.name || ''}</span>
-                                        <p className='product-name'>{product.title}</p>
+                                        <span className='product-category'>{categories.find(category => category.id === latestProduct.category_id)?.name || ''}</span>
+                                        <p className='product-name'>{latestProduct.title}</p>
                                     </div>
                                     <div className='flex justify-center gap-2 mb-2'>
                                         <FaLocationDot />
-                                        {product.location ? <p>{product.location}</p>:<p>N/A</p>}
+                                        {latestProduct.location ? <p>{latestProduct.location}</p>:<p>N/A</p>}
                                     </div>
-                                    <div className='product-price'>${product.price_per_day}/day</div>
+                                    <div className='product-price'>${latestProduct.price_per_day}/day</div>
                                 </div>
                             )
                         }
