@@ -11,9 +11,10 @@ import { createContext, useCallback, useState } from "react";
 import { NavBar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
 import { ProductListModal } from './components/ProductListModal';
-import {SessionProvider} from "./hooks/SessionContext";
-import {AdminPanel} from "./screens/admin-panel/AdminPanel";
-import {ManageProducts} from "./screens/manage-products/ManageProducts";
+import { SessionProvider } from "./hooks/SessionContext";
+import { AdminPanel } from "./screens/admin-panel/AdminPanel";
+import { ManageProducts } from "./screens/manage-products/ManageProducts";
+import { RentalItems } from './screens/rental-items';
 
 const UserContext = createContext();
 function App() {
@@ -40,8 +41,9 @@ function App() {
                             {/*<Route exact path='/admin' element={*/}
                             {/*    <ProtectedRoute><AdminPanel /></ProtectedRoute>*/}
                             {/*} />*/}
-                            <Route exact path='/admin' element={<AdminPanel/>} />
-                            <Route exact path='/manage-products' element={<ManageProducts/>} />
+                            <Route exact path='/admin' element={<AdminPanel />} />
+                            <Route exact path='/manage-products' element={<ManageProducts />} />
+                            <Route exact path='/rental-items' element={<RentalItems />} />
                         </Routes>
                         <Footer />
                         <ProductListModal show={showModal} closeModal={toggleModal} />
