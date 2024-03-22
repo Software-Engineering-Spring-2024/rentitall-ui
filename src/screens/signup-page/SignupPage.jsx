@@ -229,7 +229,7 @@ export const SignupPage = () => {
                     </div>
                 </div>
             </div>
-            {successPopup && <SuccessPopup message="Signed Up" />}
+            {successPopup && <SuccessPopup message="Signed Up" page={"Login"} redirect={'/login'}/>}
         </div>
     )
 }

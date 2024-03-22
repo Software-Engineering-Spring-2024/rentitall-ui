@@ -11,6 +11,9 @@ import { createContext, useCallback, useState } from "react";
 import { NavBar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
 import { ProductListModal } from './components/ProductListModal';
+import {SessionProvider} from "./hooks/SessionContext";
+import {AdminPanel} from "./screens/admin-panel/AdminPanel";
+import {ManageProducts} from "./screens/manage-products/ManageProducts";
 
 const UserContext = createContext();
 function App() {
@@ -20,25 +23,32 @@ function App() {
     }, []);
 
     return (
-        <Router>
-            <div className="App">
-                <div className='routes'>
-                    <NavBar handleProductListModal={toggleModal} />
-                    <Routes>
-                        <Route exact path='/' element={<Navigate to='/home' />} />
-                        <Route exact path='/login' element={<LoginPage />} />
-                        <Route exact path='/signup' element={<SignupPage />} />
-                        <Route exact path='/home' element={<HomePage handleProductListModal={toggleModal} />} />
-                        <Route exact path='/forgot-password' element={<ForgotPasswordPage />} />
-                        <Route exact path='/reset-password' element={
-                            <ProtectedRoute><ResetPassword /></ProtectedRoute>
-                        } />
-                    </Routes>
-                    <Footer />
-                    <ProductListModal show={showModal} closeModal={toggleModal} />
+        <SessionProvider>
+            <Router>
+                <div className="App">
+                    <div className='routes'>
+                        <NavBar handleProductListModal={toggleModal} />
+                        <Routes>
+                            <Route exact path='/' element={<Navigate to='/home' />} />
+                            <Route exact path='/login' element={<LoginPage />} />
+                            <Route exact path='/signup' element={<SignupPage />} />
+                            <Route exact path='/home' element={<HomePage handleProductListModal={toggleModal} />} />
+                            <Route exact path='/forgot-password' element={<ForgotPasswordPage />} />
+                            <Route exact path='/reset-password' element={
+                                <ProtectedRoute><ResetPassword /></ProtectedRoute>
+                            } />
+                            {/*<Route exact path='/admin' element={*/}
+                            {/*    <ProtectedRoute><AdminPanel /></ProtectedRoute>*/}
+                            {/*} />*/}
+                            <Route exact path='/admin' element={<AdminPanel/>} />
+                            <Route exact path='/manage-products' element={<ManageProducts/>} />
+                        </Routes>
+                        <Footer />
+                        <ProductListModal show={showModal} closeModal={toggleModal} />
+                    </div>
                 </div>
-            </div>
-        </Router>
+            </Router>
+        </SessionProvider>
     );
 }
 

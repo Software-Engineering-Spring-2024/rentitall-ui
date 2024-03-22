@@ -22,7 +22,12 @@ export const NavBar = (props) => {
         await logOutUser()
         goToHomePage()
     })
-
+    const handleAdminPanel = () => {
+        navigate('/admin');
+    }
+    const handleManageProducts = () => {
+        navigate('/manage-products')
+    }
     return (
         <div className="NavBar">
             <div onClick={goToHomePage}>
@@ -32,6 +37,13 @@ export const NavBar = (props) => {
                 />
             </div>
             <div className="navbar-actions">
+                {
+                    loginData.isLoggedIn && user && user.is_admin ? (
+                        <button onClick={handleAdminPanel} className='secondary-button'>
+                            Admin Panel
+                        </button>
+                    ) : (<></>)
+                }
                 <button onClick={props.handleProductListModal} className='secondary-button'>
                     List your item
                 </button>
@@ -48,6 +60,7 @@ export const NavBar = (props) => {
                             {showProfileDropDown &&
                                 <div className='user-profile-dropdown'>
                                     <div className='each-action'>Your Account</div>
+                                    <div className='each-action' onClick={handleManageProducts}>Manage Products</div>
                                     {/* <div className='each-action'></div>
                                     <div className='each-action'></div> */}
                                     <div className='each-action'>

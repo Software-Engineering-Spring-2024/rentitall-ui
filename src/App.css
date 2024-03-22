@@ -22,3 +22,8 @@
 .App-link {
   color: #61dafb;
 }
+
+/* styles.css */
+html {
+  scroll-behavior: smooth;
+}

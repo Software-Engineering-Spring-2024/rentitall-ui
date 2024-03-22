@@ -190,6 +190,7 @@
                 background-color: var(--dark-gray-background-color);
                 box-shadow: 0 2px 4px rgba(0, 0, 0, .16078);
                 border: 2px solid var(--dark-gray-background-color);
+                border-radius: 10%;
                 max-width: 100%;
                 flex: 100%;
                 text-align: center;
@@ -236,12 +237,12 @@
 
                     .product-name {
                         font-weight: 500;
-                        height: 4rem;
+                        height: 2rem;
                     }
                 }
 
                 .product-price {
-                    font-size: 0.875rem;
+                    font-size: 1rem;
                 }
             }
 

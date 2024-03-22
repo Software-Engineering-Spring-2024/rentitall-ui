@@ -10,7 +10,7 @@ export const Modal = (props) => {
         <React.Fragment>
             <div className="modal-overlay">
                 <div id="Modal">
-                    <button className="close" onClick={props.closeModal}>
+                    <button className="modal-close" id="mod-close" onClick={props.closeModal} style={props.closeButtonStyle}>
                         <GrClose />
                     </button>
                     <div className="modal-title">{props.title}</div>

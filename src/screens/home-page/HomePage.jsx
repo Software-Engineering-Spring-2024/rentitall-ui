@@ -11,11 +11,22 @@ import listing_img from './../../assets/Effortless Listing Process.png'
 import inspection_img from './../../assets/Quality Inspected Rentals.png'
 import support_img from './../../assets/Round-the-Clock Assistance.png'
 import calender_img from './../../assets/Flexible Renting Choices.png'
+import {useSession} from "../../hooks/SessionContext";
+import ProductPopup from "../../components/ProductPopup";
+import {FaLocationDot} from "react-icons/fa6";
 
 export const HomePage = (props) => {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
+    const [openProductPopup, setOpenProductPopup] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const isNotSmallScreen = useMediaQuery("(min-width: 768px")
+    const {userInfo} = useSession();
+    const handleProductPopup = (selectedProduct) => {
+        console.log(selectedProduct);
+        setSelectedProduct(selectedProduct);
+        setOpenProductPopup(true);
+    }
 
     useEffect(() => {
         const getAvailableCategories = async () => {
@@ -111,13 +122,17 @@ export const HomePage = (props) => {
                     <div className='products-list'>
                         {
                             products.map(product =>
-                                <div key={product.product_id} className="product-card">
+                                <div key={product.product_id} className="product-card" onClick={() => {handleProductPopup(product)}}>
                                     <div className='product-img-wrapper'>
                                         <img src={product.image} alt={product.title} onError={(e) => { e.target.onerror = null; e.target.src = img_placeholder; }} />
                                     </div>
                                     <div className='product-info'>
                                         <span className='product-category'>{categories.find(category => category.id === product.category_id)?.name || ''}</span>
                                         <p className='product-name'>{product.title}</p>
+                                    </div>
+                                    <div className='flex justify-center gap-2 mb-2'>
+                                        <FaLocationDot />
+                                        {product.location ? <p>{product.location}</p>:<p>N/A</p>}
                                     </div>
                                     <div className='product-price'>${product.price_per_day}/day</div>
                                 </div>
@@ -157,6 +172,15 @@ export const HomePage = (props) => {
                     </div>
                 </div>
             </section>
+
+            {selectedProduct && (
+                <ProductPopup
+                    product={selectedProduct}
+                    isOpen={openProductPopup}
+                    onClose={() => setOpenProductPopup(false)}
+                />
+            )}
+
         </div>
     )
 }

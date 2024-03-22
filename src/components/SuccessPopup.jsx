@@ -7,9 +7,9 @@ export const SuccessPopup = (props) => {
 
     const cancelButtonRef = useRef(null);
     const navigate = useNavigate();
-    const handleClick = () => {
+    const handleClick = (redirect) => {
         setOpen(false);
-        navigate('/login');
+        navigate(redirect);
     }
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -52,9 +52,9 @@ export const SuccessPopup = (props) => {
                                     <button
                                         type="button"
                                         className="inline-flex w-full justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-dark-green sm:ml-3 sm:w-auto"
-                                        onClick={handleClick}
+                                        onClick={() => {handleClick(props.redirect)}}
                                     >
-                                        Go back to Login Page
+                                        Go back to {props.page} Page
                                     </button>
                                 </div>
                             </Dialog.Panel>
