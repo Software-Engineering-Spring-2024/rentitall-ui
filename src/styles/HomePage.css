@@ -39,6 +39,12 @@
         padding-top: 2rem;
         padding-bottom: 2rem;
 
+        /* img background */
+        background-image: url("./../assets/rental-products2.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
         h1 {
             font-size: 5rem;
         }
@@ -183,10 +189,25 @@
         padding-bottom: 5rem;
 
         .products-list {
-            display: flex;
+            display: grid;
             gap: 0.75rem;
-            grid-gap: 0.75rem;
-            flex-wrap: wrap;
+            grid-template-rows: 364px;
+
+            @media only screen and not (min-width: 600px) {
+                grid-template-columns: auto;
+            }
+
+            @media only screen and (min-width: 600px) {
+                grid-template-columns: calc(50% - 0.75rem) 50%;
+            }
+
+            @media only screen and (min-width: 800px) {
+                grid-template-columns: calc(100%/3 - 0.75rem) calc(100%/3 - 0.75rem) calc(100%/3);
+            }
+
+            @media only screen and (min-width: 1024px) {
+                grid-template-columns: calc(25% - 0.75rem) calc(25% - 0.75rem) calc(25% - 0.75rem) 25%;
+            }
         }
 
         .explore-more-rentals {
