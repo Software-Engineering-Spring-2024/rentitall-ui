@@ -27,8 +27,8 @@ function App() {
         <SessionProvider>
             <Router>
                 <div className="App">
+                    <NavBar handleProductListModal={toggleModal} />
                     <div className='routes'>
-                        <NavBar handleProductListModal={toggleModal} />
                         <Routes>
                             <Route exact path='/' element={<Navigate to='/home' />} />
                             <Route exact path='/login' element={<LoginPage />} />
@@ -45,9 +45,9 @@ function App() {
                             <Route exact path='/manage-products' element={<ManageProducts />} />
                             <Route exact path='/rental-items' element={<RentalItems />} />
                         </Routes>
-                        <Footer />
-                        <ProductListModal show={showModal} closeModal={toggleModal} />
                     </div>
+                    <ProductListModal show={showModal} closeModal={toggleModal} />
+                    <Footer />
                 </div>
             </Router>
         </SessionProvider>
