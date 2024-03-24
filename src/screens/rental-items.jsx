@@ -11,6 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const RentalItems = (props) => {
     const [categories, setCategories] = useState([])
@@ -24,6 +25,7 @@ export const RentalItems = (props) => {
     }
 
     const getAvailableCategories = async () => {
+        console.log('calling categories')
         try {
             const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/categories");
             // console.log("getAvailableCategories response", response?.data?.data)
@@ -36,6 +38,7 @@ export const RentalItems = (props) => {
     }
 
     const getProductsList = async () => {
+        console.log('calling products')
         try {
             const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/product-list", {
                 params: {
@@ -62,7 +65,15 @@ export const RentalItems = (props) => {
     // Get Categories and Products when page loads
     useEffect(() => {
         getAvailableCategories();
-        getProductsList()
+        // const sortByFilter = searchParams.get('sortBy')
+        // const categoryFilters = searchParams.getAll('category')
+        // console.log(sortByFilter, categoryFilters)
+        // setUserSelectedFilters({
+        //     sortBy: sortByFilter,
+        //     categories: categoryFilters
+        // })
+        handleApplyFilters(false)
+        // getProductsList()
     }, [])
 
     // Accordion 
@@ -71,15 +82,15 @@ export const RentalItems = (props) => {
         setExpanded(newExpanded ? panel : false);
     };
 
+    // Filters
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
     const [userSelectedFilters, setUserSelectedFilters] = useState({
-        sortBy: 'newest',
-        categories: []
+        sortBy: searchParams.get('sortBy') && searchParams.get('sortBy').length > 0 ? searchParams.get('sortBy') : 'newest',
+        categories: searchParams.getAll('category')
     })
 
-    const [filters, setFilters] = useState({
-        sortBy: 'newest',
-        categories: []
-    })
+    const [filters, setFilters] = useState({...userSelectedFilters})
 
     const handleSortFilterInput = (e) => {
         setUserSelectedFilters({
@@ -104,15 +115,20 @@ export const RentalItems = (props) => {
         })
     }
 
-    // useEffect(() => {
-    //     console.log('userSelectedFilters', userSelectedFilters)
-    // }, [userSelectedFilters])
+    useEffect(() => {
+        console.log('userSelectedFilters', userSelectedFilters)
+    }, [userSelectedFilters])
 
     useEffect(() => {
+        searchParams.set('sortBy', filters.sortBy);
+        searchParams.delete('category')
+        filters.categories.map(categoryId => searchParams.append('category', categoryId))
+        navigate(`?${searchParams.toString()}`, { replace: true });
         getProductsList()
     }, [filters])
 
     const handleApplyFilters = (reset = false) => {
+        console.log('categories', categories)
         if (reset) {
             setUserSelectedFilters({
                 sortBy: 'newest',
