@@ -107,7 +107,7 @@ export const HomePage = (props) => {
                         <ul className='categories-list'>
                             {categories.map(category =>
                                 <li key={category.id}>
-                                    <div className='category-tile'>
+                                    <div onClick={() => {navigate(`/rental-items?category=${category.id}`)}} className='category-tile'>
                                         <a className='category-icon'>
                                             {category.name === 'Electronics' && <LuLaptop2 size='32' />}
                                             {category.name === 'Furniture' && <GiSofa size='32' />}
