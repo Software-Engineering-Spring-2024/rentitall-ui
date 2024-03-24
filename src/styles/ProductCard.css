@@ -5,27 +5,9 @@
     border: 2px solid var(--dark-gray-background-color);
     border-radius: 10%;
     max-width: 100%;
-    flex: 100%;
     text-align: center;
-
-    @media only screen and not (min-width: 600px) {
-        height: fit-content;
-    }
-
-    @media only screen and (min-width: 600px) {
-        flex: 50%;
-        max-width: calc(50% - 0.75rem);
-    }
-
-    @media only screen and (min-width: 800px) {
-        flex: calc(100%/3);
-        max-width: calc(100%/3 - 0.75rem);
-    }
-
-    @media only screen and (min-width: 1024px) {
-        flex: 25%;
-        max-width: calc(25% - 0.75rem);
-    }
+    cursor: pointer;
+    height: 364px;
 
     .product-img-wrapper {
         padding: 1rem;
@@ -51,6 +33,7 @@
         .product-name {
             font-weight: 500;
             height: 3.5rem;
+            overflow: hidden;
         }
     }
 

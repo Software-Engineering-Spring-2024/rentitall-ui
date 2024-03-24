@@ -2,9 +2,9 @@ import './../styles/ProductCard.css';
 import img_placeholder from "./../assets/Img-Placeholder.png";
 import { FaLocationDot } from "react-icons/fa6";
 
-export const ProductCard = ({product, categories}) => {
+export const ProductCard = ({product, categories, onClick}) => {
     return (
-        <div className="product-card">
+        <div className="product-card" onClick={onClick}>
             <div className='product-img-wrapper'>
                 <img src={product.image} alt={product.title} onError={(e) => { e.target.onerror = null; e.target.src = img_placeholder; }} />
             </div>
