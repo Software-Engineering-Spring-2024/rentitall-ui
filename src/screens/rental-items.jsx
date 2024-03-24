@@ -100,8 +100,8 @@ export const RentalItems = (props) => {
     }
 
     const handleCategoryFilterInput = (value) => {
-        console.log('checkbox', value)
-        const currentIndex = userSelectedFilters.categories.indexOf(value);
+        // console.log('checkbox', value)
+        const currentIndex = userSelectedFilters.categories.findIndex(c => Number(c) === Number(value));
         const newCategories = [...userSelectedFilters.categories]
 
         if (currentIndex === -1) {
@@ -184,7 +184,7 @@ export const RentalItems = (props) => {
                                     <AccordionDetails>
                                         {
                                             categories.map(category =>
-                                                <FormControlLabel key={category.id} control={<Checkbox checked={userSelectedFilters.categories.includes(category.id)} onChange={() => { handleCategoryFilterInput(category.id) }} value={category.id} />} label={category.name} />
+                                                <FormControlLabel key={category.id} control={<Checkbox checked={userSelectedFilters.categories.some(c => Number(c) === Number(category.id))} onChange={() => { handleCategoryFilterInput(category.id) }} value={category.id} />} label={category.name} />
                                             )
                                         }
                                     </AccordionDetails>
