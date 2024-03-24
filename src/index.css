@@ -19,10 +19,14 @@
 button, button[type="submit"] {
     background: var(--button-primary-color);
     padding: 1rem 2rem;
-    color: var(--text-primary-color);
-    border-radius: 0.4rem;
+    color: var(--button-primary-text-color);
+    border-radius: 0.3rem;
     line-height: 1;
     font-weight: 500;
+}
+
+button:hover, button[type="submit"]:hover {
+    background: var(--button-primary-hover-color);
 }
 
 .error-message {
@@ -32,4 +36,22 @@ button, button[type="submit"] {
 button.secondary-button {
     border: 2px solid var(--text-action-color);
     background-color: var(--button-secondary-color);
+    color: var(--text-primary-color);
+}
+
+input:focus, [type='text']:focus, input:where(:not([type])):focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus {
+    border-color: var(--secondary-bluish-green-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--secondary-bluish-green-color);
+    outline: none;
+}
+
+select:focus {
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--secondary-bluish-green-color);
+    outline: none;
+}
+
+[type='file']:focus {
+    outline: 2px solid var(--secondary-bluish-green-color);
+    /* border-color: var(--secondary-bluish-green-color); */
+
 }

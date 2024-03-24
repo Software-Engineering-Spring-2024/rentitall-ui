@@ -62,7 +62,7 @@ export const LoginPage = () => {
                         headers:
                         {
                             "Content-Type": "application/json"
-                        }
+                        },
                     });
                 console.log(response.data);
                 console.log(response);

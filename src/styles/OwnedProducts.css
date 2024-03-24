@@ -1,0 +1,15 @@
+.product-card{
+    border-radius: 20px !important;
+}
+.product-image-card{
+    border-bottom: 2px;
+    border-bottom-color: #4f6578;
+    min-height: 150px;
+    max-height: 150px;
+    /*max-width: 200px;*/
+    text-align: center;
+}
+.pd-description{
+    min-height: 40px;
+    padding-bottom: 5px;
+}

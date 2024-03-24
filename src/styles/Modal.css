@@ -14,7 +14,7 @@
 
 #Modal {
     background-color: var(--modal-dark-bg-color);
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 5px;
     max-width: 580px;
     max-height: 90%;
@@ -31,12 +31,14 @@
 
     position: relative;
 
-    >.close {
+    >.modal-close {
         position: absolute;
         background: none;
         padding: 0;
         top: 1rem;
         right: 1rem;
+        color: white;
+        z-index: 1000;
     }
 
     .modal-title {

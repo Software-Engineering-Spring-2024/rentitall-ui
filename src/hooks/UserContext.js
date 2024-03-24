@@ -7,10 +7,10 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  const initialData = { isLoggedIn: false, email: '' };
+  const initialData = JSON.parse(localStorage.getItem('loginData')) || { isLoggedIn: false, email: '' };
   const [loginData, setLoginData] = useState(initialData);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+
 
   useEffect(() => {
     const updateUserData = async () => {
@@ -39,8 +39,16 @@ export const UserProvider = ({ children }) => {
     updateUserData();
   }, [loginData]);
 
+  useEffect(() => {
+    // Persist loginData and user to local storage whenever they change
+    localStorage.setItem('loginData', JSON.stringify(loginData));
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [loginData, user]);
+
   const logOutUser = useCallback(async () => {
     Cookies.remove('user_jwtToken');
+    localStorage.removeItem('loginData');
+    localStorage.removeItem('user');
     setLoginData({ isLoggedIn: false, email: '' })
     setUser(null)
   })

@@ -8,6 +8,7 @@ module.exports = {
       colors:{
         "dark-green": "#3A5B22",
         "dark-grey": "#757575",
+        "dark-teal": "#003239",
       },
       content:{
         brandLogo: "url('./assets/rentitall-logo.jpg')",

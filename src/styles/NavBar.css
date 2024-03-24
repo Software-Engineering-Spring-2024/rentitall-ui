@@ -6,16 +6,68 @@
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: #111a23c8;
+    background-color: var(--dark-teal-theme);
     z-index: 9999;
-    
+
     .navbar-company-logo {
         height: 3rem;
         cursor: pointer;
     }
+
     .navbar-actions {
         display: flex;
         flex-direction: row;
         gap: 0.5rem;
+
+        .user-profile-wrapper {
+            padding-left: 0.5rem;
+            border-left: 1px solid white;
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            .user-profile {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                border-radius: 5px;
+                height: 100%;
+            }
+
+            .user-profile-name {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .user-profile-dropdown {
+                position: absolute;
+                padding: 0.5rem;
+                top: 70px;
+                width: 100%;
+                background-color: var(--dark-teal-theme);
+                border-radius: 5px;
+                text-align: center;
+
+                .each-action {
+                    cursor: pointer;
+                }
+
+                .each-action:not(:last-child) {
+                    padding-bottom: 0.5rem;
+                    border-bottom: 1px solid;
+                    margin-bottom: 0.5rem;
+                }
+                .sign-out-button {
+                    padding: 0.5rem 1rem;
+                    width: 100%;
+                }
+            }
+        }
+
+        .user-profile:hover {
+            /* box-shadow: 6px 6px 6px #091b19 inset, -6px -6px 6px #2c0f0f inset; */
+        }
     }
 }

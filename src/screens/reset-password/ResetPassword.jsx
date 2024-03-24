@@ -95,7 +95,7 @@ export const ResetPassword = () => {
                             </div>
                         </form>
                     </div>
-                    {successPopup && <SuccessPopup message={"Password Changed"} />}
+                    {successPopup && <SuccessPopup message={"Password Changed"} page={"Login"} redirect={'/login'} />}
                 </div>
 
             </div>
