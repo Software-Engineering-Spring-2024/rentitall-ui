@@ -16,6 +16,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.page-container {
+    max-width: 80rem;
+    padding: 0 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 button, button[type="submit"] {
     background: var(--button-primary-color);
     padding: 1rem 2rem;

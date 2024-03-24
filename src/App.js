@@ -11,9 +11,10 @@ import { createContext, useCallback, useState } from "react";
 import { NavBar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
 import { ProductListModal } from './components/ProductListModal';
-import {SessionProvider} from "./hooks/SessionContext";
-import {AdminPanel} from "./screens/admin-panel/AdminPanel";
-import {ManageProducts} from "./screens/manage-products/ManageProducts";
+import { SessionProvider } from "./hooks/SessionContext";
+import { AdminPanel } from "./screens/admin-panel/AdminPanel";
+import { ManageProducts } from "./screens/manage-products/ManageProducts";
+import { RentalItems } from './screens/rental-items';
 
 const UserContext = createContext();
 function App() {
@@ -26,8 +27,8 @@ function App() {
         <SessionProvider>
             <Router>
                 <div className="App">
+                    <NavBar handleProductListModal={toggleModal} />
                     <div className='routes'>
-                        <NavBar handleProductListModal={toggleModal} />
                         <Routes>
                             <Route exact path='/' element={<Navigate to='/home' />} />
                             <Route exact path='/login' element={<LoginPage />} />
@@ -40,12 +41,13 @@ function App() {
                             {/*<Route exact path='/admin' element={*/}
                             {/*    <ProtectedRoute><AdminPanel /></ProtectedRoute>*/}
                             {/*} />*/}
-                            <Route exact path='/admin' element={<AdminPanel/>} />
-                            <Route exact path='/manage-products' element={<ManageProducts/>} />
+                            <Route exact path='/admin' element={<AdminPanel />} />
+                            <Route exact path='/manage-products' element={<ManageProducts />} />
+                            <Route exact path='/rental-items' element={<RentalItems />} />
                         </Routes>
-                        <Footer />
-                        <ProductListModal show={showModal} closeModal={toggleModal} />
                     </div>
+                    <ProductListModal show={showModal} closeModal={toggleModal} />
+                    <Footer />
                 </div>
             </Router>
         </SessionProvider>

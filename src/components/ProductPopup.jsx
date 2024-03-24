@@ -7,8 +7,8 @@ import {useSession} from "../hooks/SessionContext";
 import {useUser} from "../hooks/UserContext";
 import {useNavigate} from "react-router-dom";
 const ProductPopup = ({ product, isOpen, onClose }) => {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
     const [successPopup, setSuccessPopup] = useState(false);
     const {user,loginData} = useUser();
@@ -37,17 +37,23 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
         console.log(`Reserving product from ${startDate} to ${endDate} for $${totalPrice}`);
         if (loginData.isLoggedIn) {
             setSuccessPopup(true);
-            onClose();
+            handleClosePopup();
         } else {
             navigate('/login');
         }
     };
 
+    const handleClosePopup = () => {
+        setStartDate("")
+        setEndDate("")
+        onClose()
+    }
+
     if (!product) return null;
 
     return (
         <>
-            <Modal show={isOpen} closeModal={onClose}>
+            <Modal show={isOpen} closeModal={handleClosePopup}>
                 <div className="bg-gray-100 p-6 rounded-lg shadow-lg relative">
                     <img src={product.image || img_placeholder} alt={product.title}
                          className="rounded-lg mb-4 w-full max-w-sm h-auto object-cover mx-auto" onError={(e) => {
