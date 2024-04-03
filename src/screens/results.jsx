@@ -13,7 +13,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-export const RentalItems = (props) => {
+export const ResultsPage = (props) => {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
     const [openProductPopup, setOpenProductPopup] = useState(false);
@@ -37,15 +37,16 @@ export const RentalItems = (props) => {
         }
     }
 
-    const getProductsList = async () => {
+    const getSearchProductsList = async () => {
         console.log('calling products')
         try {
             const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/product-list", {
                 params: {
-                    ...filters
+                    ...filters,
+                    phrase
                 }
             });
-            // console.log("getProductsList response", response?.data?.data)
+            // console.log("getSearchProductsList response", response?.data?.data)
             const products_list = response.data.data
             // const new_products_list = products_list.map(product => {
             //     if(product.image[0] == '/') {
@@ -72,8 +73,8 @@ export const RentalItems = (props) => {
         //     sortBy: sortByFilter,
         //     categories: categoryFilters
         // })
-        handleApplyFilters(false)
-        // getProductsList()
+        // handleApplyFilters(false)
+        // getSearchProductsList()
     }, [])
 
     // Accordion 
@@ -85,6 +86,11 @@ export const RentalItems = (props) => {
     // Filters
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
+    const phrase = searchParams.get('phrase')
+    useEffect(() => {
+        handleApplyFilters(false)
+        getSearchProductsList()
+    }, [phrase])
     const [userSelectedFilters, setUserSelectedFilters] = useState({
         sortBy: searchParams.get('sortBy') && searchParams.get('sortBy').length > 0 ? searchParams.get('sortBy') : 'newest',
         filterCategories: searchParams.getAll('category')
@@ -124,7 +130,7 @@ export const RentalItems = (props) => {
         searchParams.delete('category')
         filters.filterCategories.map(categoryId => searchParams.append('category', categoryId))
         navigate(`?${searchParams.toString()}`, { replace: true });
-        getProductsList()
+        getSearchProductsList()
     }, [filters])
 
     const handleApplyFilters = (reset = false) => {
@@ -146,7 +152,7 @@ export const RentalItems = (props) => {
         <div id="RentalItemsPage">
             <div className="page-container">
                 <section className="mb-8">
-                    <PageHeading title="Rentals" />
+                    <PageHeading title={`Search Results - ${phrase}`} />
                 </section>
                 <section className="products-section">
                     <div className="filters-sidebar">

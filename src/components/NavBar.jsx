@@ -1,14 +1,36 @@
 import { useCallback, useState, useEffect } from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import './../styles/NavBar.css'
 import { useUser } from '../hooks/UserContext';
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
 
 export const NavBar = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { loginData, logOutUser, user } = useUser();
+    const [searchInput, setSearchInput] = useState('')
     const [showProfileDropDown, setShowProfileDropDown] = useState(false)
+    useEffect(() => {
+        // console.log('searchInput', searchInput)
+    }, [searchInput])
+    const handleSearch = useCallback(async (e) => {
+        e.preventDefault();
+        console.log('search clicked!!!')
+        // const searchProductsResponse = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/product-list", {
+        //     params: {
+        //         phrase: searchInput
+        //     }
+        // })
+        // console.log(searchProductsResponse)
+        if(location.pathname == '/results') {
+            searchParams.set('phrase', searchInput)
+        }
+        navigate(`/results?phrase=${searchInput}`)
+    })
     const toggleProfileDropdown = useCallback(() => {
         setShowProfileDropDown(!showProfileDropDown)
     })
@@ -37,6 +59,16 @@ export const NavBar = (props) => {
                 />
             </div>
             <div className="navbar-actions">
+                <div className='search-bar-wrapper'>
+                    <form className='search-bar-form' onSubmit={handleSearch}>
+                        <div className='input-wrapper'>
+                            <input type="text" id="searchbar" name="searchbar" value={searchInput} placeholder="Search..." onChange={(e) => {
+                                setSearchInput(e.target.value)
+                            }} />
+                        </div>
+                        <button type="submit" className='search-submit'><SearchIcon color='white'/></button>
+                    </form>
+                </div>
                 {
                     loginData.isLoggedIn && user && user.is_admin ? (
                         <button onClick={handleAdminPanel} className='secondary-button'>
