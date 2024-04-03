@@ -26,7 +26,7 @@ export const NavBar = (props) => {
         //     }
         // })
         // console.log(searchProductsResponse)
-        if(location.pathname == '/results') {
+        if (location.pathname == '/results') {
             searchParams.set('phrase', searchInput)
         }
         navigate(`/results?phrase=${searchInput}`)
@@ -50,6 +50,8 @@ export const NavBar = (props) => {
     const handleManageProducts = () => {
         navigate('/manage-products')
     }
+
+    const searchBarExcludedPaths = ['/login', '/forgot-password', '/signup']
     return (
         <div className="NavBar">
             <div onClick={goToHomePage}>
@@ -59,16 +61,21 @@ export const NavBar = (props) => {
                 />
             </div>
             <div className="navbar-actions">
-                <div className='search-bar-wrapper'>
-                    <form className='search-bar-form' onSubmit={handleSearch}>
-                        <div className='input-wrapper'>
-                            <input type="text" id="searchbar" name="searchbar" value={searchInput} placeholder="Search..." onChange={(e) => {
-                                setSearchInput(e.target.value)
-                            }} />
+                {
+                    !searchBarExcludedPaths.includes(location.pathname) &&
+                    (
+                        <div className='search-bar-wrapper'>
+                            <form className='search-bar-form' onSubmit={handleSearch}>
+                                <div className='input-wrapper'>
+                                    <input type="text" id="searchbar" name="searchbar" value={searchInput} placeholder="Search..." onChange={(e) => {
+                                        setSearchInput(e.target.value)
+                                    }} />
+                                </div>
+                                <button type="submit" className='search-submit'><SearchIcon color='white' /></button>
+                            </form>
                         </div>
-                        <button type="submit" className='search-submit'><SearchIcon color='white'/></button>
-                    </form>
-                </div>
+                    )
+                }
                 {
                     loginData.isLoggedIn && user && user.is_admin ? (
                         <button onClick={handleAdminPanel} className='secondary-button'>

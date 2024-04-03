@@ -20,6 +20,7 @@
     .input-wrapper {
         /* margin-top: 0.25rem; */
         position: relative;
+        height: 52px;
         span {
             position: absolute;
             transform: translateY(50%);
