@@ -57,10 +57,10 @@ export const OwnedProducts = () => {
             animate={{opacity: 1}}
             className="space-y-4"
         >
-            <div className="flex md:flex-row">
+            <div className="flex md:flex-row gap-3">
                 {ownedProducts.map((product) => (
                     <Card key={product.id}
-                          className={`max-w-md mx-auto product-card ${product.status === 'Inactive' ? 'opacity-50' : ''}`}>
+                          className={`max-w-md manage-product-card ${product.status === 'Inactive' ? 'opacity-50' : ''}`}>
                         <CardMedia
                             component="img"
                             image={product.image}

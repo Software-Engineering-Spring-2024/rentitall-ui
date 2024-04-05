@@ -36,8 +36,9 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
         e.preventDefault();
         console.log(`Reserving product from ${startDate} to ${endDate} for $${totalPrice}`);
         if (loginData.isLoggedIn) {
-            setSuccessPopup(true);
-            handleClosePopup();
+            // setSuccessPopup(true);
+            // handleClosePopup();
+            navigate('/payment', {state: {product, startDate, endDate, totalPrice}});
         } else {
             navigate('/login');
         }
