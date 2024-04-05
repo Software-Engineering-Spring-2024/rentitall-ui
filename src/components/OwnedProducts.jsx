@@ -68,12 +68,12 @@ export const OwnedProducts = () => {
                             className='product-image-card'
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
+                            <Typography gutterBottom variant="h7" component="div">
                                 {product.title}
                             </Typography>
-                            <Typography variant="body2" className='pd-description' color="text.secondary">
-                                {product.description}
-                            </Typography>
+                            {/*<Typography variant="body2" className='pd-description' color="text.secondary">*/}
+                            {/*    {product.description}*/}
+                            {/*</Typography>*/}
                             {product.status === 'Rejected' && (
                                 <div className="text-red-500">
                                     <LensIcon color="error" fontSize="small" /> Rejected

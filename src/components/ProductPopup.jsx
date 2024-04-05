@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from './Modal'; // Your Modal component
 import img_placeholder from '../assets/Img-Placeholder.png'; // Fallback image
+import { Rating } from '@mui/material'; // Import Rating component
 import '../styles/ProductPopup.css'
 import { SuccessPopup } from "./SuccessPopup";
 import { useSession } from "../hooks/SessionContext";
@@ -34,7 +35,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
         if (isOpen) {
             document.getElementById('mod-close').style.color = 'black';
         }
-    }, [startDate, endDate, product.price_per_day]);
+    }, [startDate, endDate, product.price_per_day, isOpen]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -118,6 +119,14 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
                     <h2 className="text-2xl font-bold text-gray-800 mb-2 capitalize">{product.title}</h2>
 
                     <p className="text-gray-600 mb-4 capitalize">{product.description}</p>
+
+                    {product.rating && (
+                        <div className="mb-4">
+                            <span className="text-gray-600">Rating:</span>
+                            <Rating name="read-only" value={product.rating} readOnly />
+                        </div>
+                    )}
+
                     <div className="mb-4">
                         <span className="text-gray-600">Owner Name:</span>
                         <span className="text-xl text-gray-800 font-semibold capitalize"> {product.owner.firstName} {product.owner.lastName} </span>
@@ -135,8 +144,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
                     <div className="border-t pt-4">
                         <h4 className="text-lg text-gray-800 font-semibold mb-2">Want to rent this item?</h4>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <label htmlFor="start-date" className="block text-sm font-semibold text-gray-700">Start
-                                Date:</label>
+                            <label htmlFor="start-date" className="block text-sm font-semibold text-gray-700">Start Date:</label>
                             <input type="date" id="start-date" name="start-date"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
@@ -144,8 +152,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
                                 min={today} // Disable past dates
                                 required />
 
-                            <label htmlFor="end-date" className="block text-sm font-semibold text-gray-700">End
-                                Date:</label>
+                            <label htmlFor="end-date" className="block text-sm font-semibold text-gray-700">End Date:</label>
                             <input type="date" id="end-date" name="end-date"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
