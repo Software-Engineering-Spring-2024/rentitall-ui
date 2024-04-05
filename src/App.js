@@ -16,6 +16,8 @@ import { AdminPanel } from "./screens/admin-panel/AdminPanel";
 import { ManageProducts } from "./screens/manage-products/ManageProducts";
 import { RentalItems } from './screens/rental-items';
 import { ResultsPage } from './screens/results';
+import {SuccessPopup} from "./components/SuccessPopup";
+import DummyPaymentPage from "./components/DummyPaymentPage";
 
 const UserContext = createContext();
 function App() {
@@ -46,10 +48,12 @@ function App() {
                             <Route exact path='/manage-products' element={<ManageProducts />} />
                             <Route exact path='/rental-items' element={<RentalItems />} />
                             <Route exact path='/results' element={<ResultsPage />} />
+                            <Route path="/payment" element={<DummyPaymentPage />} />
+                            <Route path="/payment-success" element={<SuccessPopup />} />
                         </Routes>
                     </div>
                     <ProductListModal show={showModal} closeModal={toggleModal} />
-                    <Footer />
+                    {/*<Footer />*/}
                 </div>
             </Router>
         </SessionProvider>
