@@ -7,6 +7,9 @@ import { SuccessPopup } from "./SuccessPopup";
 import { useSession } from "../hooks/SessionContext";
 import { useUser } from "../hooks/UserContext";
 import { useNavigate } from "react-router-dom";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import { supabase } from './../supabaseClient.js';
 
 const ProductPopup = ({ product, isOpen, onClose }) => {
     const [startDate, setStartDate] = useState("");
@@ -25,7 +28,8 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
             const end = new Date(endDate);
             const difference = Math.max((end - start) / (1000 * 60 * 60 * 24), 0); // Ensure difference is non-negative
             setTotalPrice((difference === 0 ? 1 : difference) * product.price_per_day);
-        } else {
+        }
+        else {
             setTotalPrice(product.price_per_day);
         }
         if (isOpen) {
@@ -48,8 +52,51 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
     const handleClosePopup = () => {
         setStartDate("")
         setEndDate("")
+        setImages([])
         onClose()
     }
+
+    // Product gallery
+    const [images, setImages] = useState([]);
+
+    // useEffect(() => {
+    //     console.log(images)
+    // }, [images])
+
+    useEffect(() => {
+        const getImagesFromBucket = async () => {
+            try {
+                const { data, error } = await supabase.storage.from('product_media').list(`${product.product_id}`);
+                console.log(data, error)
+                const additionalImages = await Promise.all([...data].map(async (file) => {
+                    const { data, error } = await supabase.storage
+                        .from('product_media')
+                        .createSignedUrl(`${product.product_id}/${file.name}`, 300);
+
+                    if (error) {
+                        console.error('Error generating signed URL:', error);
+                        return {
+                            original: null,
+                            thumbnail: null
+                        };
+                    }
+
+                    return {
+                        original: data.signedUrl,
+                        thumbnail: data.signedUrl
+                    }
+                }))
+                setImages([{
+                    original: product.image,
+                    thumbnail: product.image,
+                }, ...additionalImages],)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        getImagesFromBucket()
+    }, [product])
 
     if (!product) return null;
 
@@ -57,11 +104,17 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
         <>
             <Modal show={isOpen} closeModal={handleClosePopup}>
                 <div className="bg-gray-100 p-6 rounded-lg shadow-lg relative">
-                    <img src={product.image || img_placeholder} alt={product.title}
-                         className="rounded-lg mb-4 w-full max-w-sm h-auto object-cover mx-auto" onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = img_placeholder;
-                    }}/>
+                    {
+                        images.length > 1 ? (
+                            <ImageGallery items={images} />
+                        ) : (
+                            <img src={product.image || img_placeholder} alt={product.title}
+                                className="rounded-lg mb-4 w-full max-w-sm h-auto object-cover mx-auto" onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = img_placeholder;
+                                }} />
+                        )
+                    }
 
                     <h2 className="text-2xl font-bold text-gray-800 mb-2 capitalize">{product.title}</h2>
 
@@ -93,29 +146,29 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <label htmlFor="start-date" className="block text-sm font-semibold text-gray-700">Start Date:</label>
                             <input type="date" id="start-date" name="start-date"
-                                   value={startDate}
-                                   onChange={(e) => setStartDate(e.target.value)}
-                                   className="w-full border rounded-md p-2 text-gray-500"
-                                   min={today} // Disable past dates
-                                   required/>
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                                className="w-full border rounded-md p-2 text-gray-500"
+                                min={today} // Disable past dates
+                                required />
 
                             <label htmlFor="end-date" className="block text-sm font-semibold text-gray-700">End Date:</label>
                             <input type="date" id="end-date" name="end-date"
-                                   value={endDate}
-                                   onChange={(e) => setEndDate(e.target.value)}
-                                   className="w-full border rounded-md p-2 text-gray-500"
-                                   min={startDate || today} // Ensure end date is not before start date or today
-                                   required/>
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                                className="w-full border rounded-md p-2 text-gray-500"
+                                min={startDate || today} // Ensure end date is not before start date or today
+                                required />
 
                             <button type="submit"
-                                    className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition duration-300">
+                                className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition duration-300">
                                 Reserve
                             </button>
                         </form>
                     </div>
                 </div>
             </Modal>
-            {successPopup && <SuccessPopup message="Reservation Completed" page={"Home"} redirect={'/home'}/>}
+            {successPopup && <SuccessPopup message="Reservation Completed" page={"Home"} redirect={'/home'} />}
 
         </>
     );

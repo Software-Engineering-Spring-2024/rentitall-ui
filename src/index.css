@@ -23,7 +23,7 @@
     margin-right: auto;
 }
 
-button, button[type="submit"] {
+button, button[type="submit"], [type='button'], [type='reset'], [type='submit'] {
     background: var(--button-primary-color);
     padding: 1rem 2rem;
     color: var(--button-primary-text-color);
