@@ -11,7 +11,8 @@ const DummyPaymentPage = () => {
         expiryDate: '',
         cvv: '',
         nameOnCard: '',
-        billingAddress: ''
+        billingAddress: '',
+        couponCode:''
     });
     const navigate = useNavigate();
     ;
@@ -197,6 +198,31 @@ const DummyPaymentPage = () => {
                         />
                     </Grid>
                     <Grid item xs={12}>
+                        <TextField
+                            label="Coupon Code (Optional)"
+                            variant="outlined"
+                            fullWidth
+                            name="couponCode"
+                            value={paymentInfo.couponCode}
+                            onChange={handleChange}
+                            InputLabelProps={{style: { color: 'white' }}}
+                            inputProps={{style: { color: 'white' }}}
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                },
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
                         <Button
                             type="submit"
                             variant="contained"
@@ -215,6 +241,7 @@ const DummyPaymentPage = () => {
                     </Grid>
                 </Grid>
             </form>
+
         </Container>
         {successPopup && <SuccessPopup message="Reservation Completed" page={"Home"} redirect={'/home'}/>}
         </>
