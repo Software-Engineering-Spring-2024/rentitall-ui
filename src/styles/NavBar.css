@@ -17,6 +17,58 @@
         cursor: pointer;
     }
 
+    .input-wrapper {
+        /* margin-top: 0.25rem; */
+        position: relative;
+        height: 52px;
+        span {
+            position: absolute;
+            transform: translateY(50%);
+            right: 0.5rem;
+        }
+    }
+
+    input {
+        background-color: var(--dim-dark-blue-shade);
+        border: 1px solid var(--input-border-color);
+        border-radius: 0.5rem;
+        color: var(--text-primary-color);
+        padding: 1rem 2.5rem 1rem 1rem;
+        font-size: 1rem;
+    }
+    ::-ms-input-placeholder { /* Edge 12-18 */
+        color: var(--input-placeholder-color);
+    }
+    ::placeholder {
+        color: var(--input-placeholder-color);
+        /* font-size: 13px; */
+        font-weight: 450;
+    }
+
+    .search-bar-wrapper {
+        color: black;
+        .search-bar-form {
+            display: flex;
+            position: relative;
+        }
+    }
+
+    .search-submit {
+        background-color: transparent;
+        position: absolute;
+        padding: 0;
+        right: 0.5rem;
+        top: 1rem;
+        svg {
+            fill: white;
+        }
+    }
+    .search-submit:hover {
+        background-color: transparent;
+        transform: scale(1.2)
+    }
+
+
     .navbar-actions {
         display: flex;
         flex-direction: row;
