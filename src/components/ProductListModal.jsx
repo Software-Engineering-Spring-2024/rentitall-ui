@@ -5,6 +5,8 @@ import { GrClose } from "react-icons/gr";
 import axios from "axios";
 import { useUser } from '../hooks/UserContext';
 import { useNavigate } from "react-router-dom";
+import { supabase } from './../supabaseClient.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export const ProductListModal = (props) => {
     // const categories = [
@@ -84,19 +86,61 @@ export const ProductListModal = (props) => {
         }
     }
 
+    // Handle multiple additional media upload
+    const [additionalMedia, setAdditionalMedia] = useState([])
+    const additionalFilesInputRef = useRef(null)
+    useEffect(() => { console.log(additionalMedia); }, [additionalMedia])
+    const handleAdditionalMediaUpload = (e) => {
+        const files = [...e.target.files].map(file => {
+            return {
+                id: uuidv4(),
+                file,
+                preview: URL.createObjectURL(file)
+            }
+        })
+        setAdditionalMedia(
+            [...additionalMedia, ...files]
+        )
+    }
+    const removeFile = (id) => {
+        setAdditionalMedia(
+            additionalMedia.filter(file => file.id !== id)
+        )
+    }
+
+    const uploadFilesToStorage = async (product_id) => {
+        try {
+            const uploads = additionalMedia.map(fileObj => {
+                return supabase.storage.from('product_media').upload(`${product_id}/${fileObj.file.name}`, fileObj.file, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
+            });
+
+            const results = await Promise.all(uploads);
+            console.log(results);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleSubmitProductListDetails = useCallback(async (e) => {
         e.preventDefault()
         console.log('product details to be submitted', productDetails)
-        const response = await axios.post(process.env.REACT_APP_PRODUCT_SERVICE + "/add-product", productDetails,
-            {
-                headers:
+        try {
+            const response = await axios.post(process.env.REACT_APP_PRODUCT_SERVICE + "/add-product", productDetails,
                 {
-                    "Content-Type": "application/json"
-                }
-            });
-        console.log(response)
-        if(response.status == 200) {
-            handleModalClose()
+                    headers:
+                    {
+                        "Content-Type": "application/json"
+                    }
+                });
+            if (response.status == 200 && response?.data?.addData?.length > 0) {
+                await uploadFilesToStorage(response.data.addData[0].product_id)
+                handleModalClose()
+            }
+        } catch (error) {
+            console.log(error)
         }
     })
 
@@ -109,6 +153,7 @@ export const ProductListModal = (props) => {
             ownerId: user?.user_id || "",
             imgBase64: ""
         })
+        setAdditionalMedia([])
         props.closeModal()
     })
 
@@ -214,7 +259,7 @@ export const ProductListModal = (props) => {
                                 </div>
                                 <div className="field-wrapper">
                                     <label htmlFor="product_image" className="">
-                                        Upload image
+                                        Upload Product Image
                                     </label>
                                     <div className="input-wrapper">
                                         <input
@@ -236,6 +281,55 @@ export const ProductListModal = (props) => {
                                                 </div>
                                             )
                                         }
+                                    </div>
+                                </div>
+                                <div className="field-wrapper">
+                                    <label htmlFor="additional_media" className="">
+                                        Upload Additional Product Media
+                                    </label>
+                                    <div className="input-wrapper">
+                                        <input
+                                            id="additional_media"
+                                            name="additional_media"
+                                            type="file"
+                                            multiple
+                                            ref={additionalFilesInputRef}
+                                            onChange={handleAdditionalMediaUpload}
+                                        />
+                                        <div className="imagesPreview">
+                                            {
+                                                additionalMedia.map(fileObj => (
+                                                    <div key={fileObj.id} className="imagePreview">
+                                                        {
+                                                            fileObj.file.type.startsWith("image/") && (
+                                                                <>
+                                                                    <img src={fileObj.preview} alt="Preview" width="200" height="200" style={{ minWidth: '200px', minHeight: '200px', maxHeight: '200px', maxWidth: '200px' }} />
+                                                                    <span className="remove-image" onClick={() => { removeFile(fileObj.id) }}><GrClose size="8" /></span>
+                                                                </>
+                                                            )
+                                                        }
+                                                        {
+                                                            fileObj.file.type.startsWith("video/") && (
+                                                                <>
+                                                                    <video controls src={fileObj.preview} alt="Video preview" style={{ maxWidth: '200px', maxHeight: '200px' }}></video>
+                                                                    <span className="remove-image" onClick={() => { removeFile(fileObj.id) }}><GrClose size="8" /></span>
+                                                                </>
+                                                            )
+                                                        }
+                                                        {
+                                                            fileObj.file.type === "application/pdf" && (
+                                                                <>
+                                                                    <object data={fileObj.preview} type="application/pdf" width="200" height="200">
+                                                                        <a href={fileObj.preview} target="_blank" rel="noopener noreferrer">View PDF</a>
+                                                                    </object>
+                                                                    <span className="remove-image" onClick={() => { removeFile(fileObj.id) }}><GrClose size="8" /></span>
+                                                                </>
+                                                            )
+                                                        }
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
