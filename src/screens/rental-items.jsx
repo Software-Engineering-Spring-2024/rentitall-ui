@@ -142,6 +142,7 @@ export const RentalItems = (props) => {
             setFilters({ ...userSelectedFilters })
         }
     }
+    
     return (
         <div id="RentalItemsPage">
             <div className="page-container">

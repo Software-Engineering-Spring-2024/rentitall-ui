@@ -14,7 +14,7 @@ export const ProductCard = ({product, categories, onClick}) => {
             </div>
             <div className='flex justify-center gap-1 mb-2 items-center'>
                 <FaLocationDot />
-                {product.location ? <p>{product.location}</p> : <p>N/A</p>}
+                {product.location ? <p>{product.location.city}</p> : <p>-</p>}
             </div>
             <div className='product-price'>${product.price_per_day}/day</div>
         </div>

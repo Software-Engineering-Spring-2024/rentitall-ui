@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { supabase } from './../supabaseClient.js';
+import { GoogleMap, MarkerF } from '@react-google-maps/api';
 
 const ProductPopup = ({ product, isOpen, onClose }) => {
     const [startDate, setStartDate] = useState("");
@@ -131,6 +132,25 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
                         <span className="text-gray-600">Owner Name:</span>
                         <span className="text-xl text-gray-800 font-semibold capitalize"> {product.owner.firstName} {product.owner.lastName} </span>
                     </div>
+                    <div className="mb-4">
+                        <span className="text-gray-600">Location:</span>
+                        <span className="text-xl text-gray-800 font-semibold"> {product.location.address}</span>
+                    </div>
+                    {
+                        <GoogleMap mapContainerStyle={{
+                            height: "400px",
+                            width: "90%",
+                            margin: 'auto'
+                        }} center={{
+                            lat: Number(product.location.lat),
+                            lng: Number(product.location.long)
+                        }} zoom={10}>
+                            <MarkerF position={{
+                                lat: Number(product.location.lat),
+                                lng: Number(product.location.long)
+                            }} />
+                        </GoogleMap>
+                    }
                     <div className="mb-4">
                         <span className="text-gray-600">Price per day:</span>
                         <span className="text-xl text-gray-800 font-semibold"> ${product.price_per_day}</span>
