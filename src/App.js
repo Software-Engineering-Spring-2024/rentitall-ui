@@ -32,7 +32,7 @@ function App() {
     return (
         <SessionProvider>
             <Router>
-                <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+                <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
                     <div className="App">
                         <NavBar handleProductListModal={toggleModal} />
                         <div className='routes'>
