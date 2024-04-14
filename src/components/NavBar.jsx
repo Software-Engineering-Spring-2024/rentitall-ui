@@ -19,13 +19,9 @@ export const NavBar = (props) => {
     }, [searchInput])
     const handleSearch = useCallback(async (e) => {
         e.preventDefault();
-        console.log('search clicked!!!')
-        // const searchProductsResponse = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/product-list", {
-        //     params: {
-        //         phrase: searchInput
-        //     }
-        // })
-        // console.log(searchProductsResponse)
+        // console.log('search clicked!!!')
+        if(searchInput.length == 0) return
+        
         if (location.pathname == '/results') {
             searchParams.set('phrase', searchInput)
         }
