@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import axios from "axios";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -8,11 +8,12 @@ import { BackArrowButton } from "../../components/BackArrowButton";
 import Constants from "../../Constants";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import "./../../styles/SignUp.css"
+import { StandaloneSearchBox } from "@react-google-maps/api";
 
 export const SignupPage = () => {
     const navigate = useNavigate();
     const [signupDetails, setSignupDetails] = useState(
-        { 'username': '', 'firstName': '', 'lastName': '', 'email': '', 'mobile': '', 'password': '', 'address': '', 'zipCode': '' })
+        { 'username': '', 'firstName': '', 'lastName': '', 'email': '', 'mobile': '', 'password': '', 'address': '', 'zipCode': '', 'lat': '', 'long': '' })
     const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
     const [displayErrorBanner, setDisplayErrorBanner] = useState(false);
     const [successPopup, setSuccessPopup] = useState(false);
@@ -45,6 +46,25 @@ export const SignupPage = () => {
 
             response.status === 200 ? setSuccessPopup(true) : handleSignupError(response.data);
         }, [signupDetails]);
+
+    // Address autocomplete
+    const autocompleteInputRef = useRef(null)
+    const handlePlacesChanged = () => {
+        if (autocompleteInputRef.current) {
+            const place = autocompleteInputRef.current.getPlaces();
+            console.log('address', place);
+            if(place && place.length > 0) {
+                const postalCode = place[0]?.address_components?.find(component => component.types.includes("postal_code"));
+                
+                setSignupDetails(prevDetails => ({
+                    ...prevDetails,
+                    lat: place[0].geometry.location.lat(),
+                    long: place[0].geometry.location.lng(),
+                    ...(postalCode && { zipCode: postalCode.long_name }) // Only add zipCode key if postalCode exists
+                }));
+            }
+        }
+    };
     return (
         <div className="SignUpPage">
             <div className="signup-container">
@@ -144,7 +164,7 @@ export const SignupPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="field-wrapper">
+                            {/* <div className="field-wrapper">
                                 <label htmlFor="address" className="">
                                     Address
                                 </label>
@@ -158,6 +178,24 @@ export const SignupPage = () => {
                                         required
                                         onChange={handleChange}
                                     />
+                                </div>
+                            </div> */}
+                            <div className="field-wrapper">
+                                <label htmlFor="address" className="">
+                                    Address
+                                </label>
+                                <div className="input-wrapper">
+                                    <StandaloneSearchBox
+                                        onLoad={ref => autocompleteInputRef.current = ref}
+                                        onPlacesChanged={handlePlacesChanged}
+                                    >
+                                        <input
+                                            id="address"
+                                            name="address"
+                                            type="text"
+                                            placeholder="Enter Your Address"
+                                        />
+                                    </StandaloneSearchBox>
                                 </div>
                             </div>
                             <div className="field-wrapper">
@@ -192,7 +230,7 @@ export const SignupPage = () => {
                                         }}
                                         placeholder="Enter Your Password"
                                         autoComplete="current-password"
-                                        required                                        
+                                        required
                                     />
                                     <span className="show-or-hide-password-toggle">
                                         <a onMouseDown={() => {
@@ -229,7 +267,7 @@ export const SignupPage = () => {
                     </div>
                 </div>
             </div>
-            {successPopup && <SuccessPopup message="Signed Up" page={"Login"} redirect={'/login'}/>}
+            {successPopup && <SuccessPopup message="Signed Up" page={"Login"} redirect={'/login'} />}
         </div>
     )
 }

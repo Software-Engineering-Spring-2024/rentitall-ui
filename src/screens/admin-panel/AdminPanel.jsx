@@ -9,17 +9,16 @@ import * as PropTypes from "prop-types";
 import '../../styles/AdminPanel.css'
 
 
-CancelIcon.propTypes = {style: PropTypes.shape({color: PropTypes.string})};
+CancelIcon.propTypes = { style: PropTypes.shape({ color: PropTypes.string }) };
 export const AdminPanel = () => {
     const [products, setProducts] = useState([]);
-    const [selectedCities, setSelectedCities] = useState({}); // Tracks selected cities for each product
-
-    const cities = ['Bloomington', 'Chicago', 'Indianapolis', 'New York'];
+    const [locations, setLocations] = useState([]);
+    const [selectedCities, setSelectedCities] = useState({}); // Tracks selected locations for each product
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE+ "/getUnApprovedProducts");
-            console.log(response.data);
+            const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE + "/getUnApprovedProducts");
+            console.log('/getUnApprovedProducts', response.data);
             return response.data.data;
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -31,7 +30,24 @@ export const AdminPanel = () => {
         setProducts(productList);
     };
 
+    const fetchStoreLocations = async () => {
+        try {
+            const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE + "/getStoreLocations");
+            console.log('/getStoreLocations', response.data);
+            return response.data.data;
+        } catch (error) {
+            console.error('Error fetching store locations:', error);
+            return [];
+        }
+    }
+
+    const getStoreLocations = async () => {
+        const locationsList = await fetchStoreLocations();
+        setLocations(locationsList)
+    }
+
     useEffect(() => {
+        getStoreLocations()
         getProducts();
     }, []);
 
@@ -45,7 +61,7 @@ export const AdminPanel = () => {
                 alert('Please select a city before approving.');
                 return;
             }
-            const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE+ "/approve?productId=" +productId+"&city="+selectedCity);
+            const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE+ "/approve?productId=" +productId+"&locationId="+selectedCity);
             console.log(response.data);
             await getProducts();
         } catch (error) {
@@ -55,7 +71,7 @@ export const AdminPanel = () => {
     };
     const handleReject = async (productId) => {
         try {
-            const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE+ "/reject?productId=" +productId);
+            const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE + "/reject?productId=" + productId);
             console.log(response.data);
             await getProducts();
         } catch (error) {
@@ -72,15 +88,15 @@ export const AdminPanel = () => {
                     {Array.isArray(products) && products.map((product) => (
                         <motion.div
                             key={product.product_id}
-                            initial={{opacity: 0}}
-                            animate={{opacity: 1}}
-                            transition={{duration: 0.5}}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5 }}
                             className="flex flex-col bg-white rounded-xl overflow-hidden shadow-md transition duration-300 ease-in-out"
-                            style={{minHeight: '350px'}} // Ensures consistency in card size
+                            style={{ minHeight: '350px' }} // Ensures consistency in card size
                         >
                             <img
                                 className="w-full object-cover"
-                                style={{height: '160px'}} // Adjusted for aspect ratio
+                                style={{ height: '160px' }} // Adjusted for aspect ratio
                                 src={product.image}
                                 alt={product.title}
                             />
@@ -88,7 +104,7 @@ export const AdminPanel = () => {
                                 <h3 className="text-lg font-bold text-gray-800 mb-2">{product.title}</h3>
                                 <div
                                     className="text-gray-700 text-sm mb-3"
-                                    style={{maxHeight: '4rem', overflowY: 'scroll'}} // Scrollable description
+                                    style={{ maxHeight: '4rem', overflowY: 'scroll' }} // Scrollable description
                                 >
                                     {product.description}
                                 </div>
@@ -103,8 +119,8 @@ export const AdminPanel = () => {
                                     className=" mt-2 p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
                                 >
                                     <option value="" disabled>Select a city</option>
-                                    {cities.map((city) => (
-                                        <option key={city} value={city}>{city}</option>
+                                    {locations.map((location) => (
+                                        <option key={location.id} value={location.id}>{location.city}</option>
                                     ))}
                                 </select>
                             </div>
@@ -114,7 +130,7 @@ export const AdminPanel = () => {
                                     // style={{ backgroundColor: 'green', marginRight: '8px' }} // Green background
                                     aria-label="approve"
                                 >
-                                    <CheckCircleIcon className='approve'/>
+                                    <CheckCircleIcon className='approve' />
                                 </IconButton>
                                 <IconButton
                                     onClick={() => handleReject(product.product_id)}

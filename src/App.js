@@ -16,8 +16,11 @@ import { AdminPanel } from "./screens/admin-panel/AdminPanel";
 import { ManageProducts } from "./screens/manage-products/ManageProducts";
 import { RentalItems } from './screens/rental-items';
 import { ResultsPage } from './screens/results';
-import {SuccessPopup} from "./components/SuccessPopup";
+import { SuccessPopup } from "./components/SuccessPopup";
 import DummyPaymentPage from "./components/DummyPaymentPage";
+import { LoadScript } from '@react-google-maps/api';
+
+const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 const UserContext = createContext();
 function App() {
@@ -29,32 +32,34 @@ function App() {
     return (
         <SessionProvider>
             <Router>
-                <div className="App">
-                    <NavBar handleProductListModal={toggleModal} />
-                    <div className='routes'>
-                        <Routes>
-                            <Route exact path='/' element={<Navigate to='/home' />} />
-                            <Route exact path='/login' element={<LoginPage />} />
-                            <Route exact path='/signup' element={<SignupPage />} />
-                            <Route exact path='/home' element={<HomePage handleProductListModal={toggleModal} />} />
-                            <Route exact path='/forgot-password' element={<ForgotPasswordPage />} />
-                            <Route exact path='/reset-password' element={
-                                <ProtectedRoute><ResetPassword /></ProtectedRoute>
-                            } />
-                            {/*<Route exact path='/admin' element={*/}
-                            {/*    <ProtectedRoute><AdminPanel /></ProtectedRoute>*/}
-                            {/*} />*/}
-                            <Route exact path='/admin' element={<AdminPanel />} />
-                            <Route exact path='/manage-products' element={<ManageProducts />} />
-                            <Route exact path='/rental-items' element={<RentalItems />} />
-                            <Route exact path='/results' element={<ResultsPage />} />
-                            <Route path="/payment" element={<DummyPaymentPage />} />
-                            <Route path="/payment-success" element={<SuccessPopup />} />
-                        </Routes>
+                <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
+                    <div className="App">
+                        <NavBar handleProductListModal={toggleModal} />
+                        <div className='routes'>
+                            <Routes>
+                                <Route exact path='/' element={<Navigate to='/home' />} />
+                                <Route exact path='/login' element={<LoginPage />} />
+                                <Route exact path='/signup' element={<SignupPage />} />
+                                <Route exact path='/home' element={<HomePage handleProductListModal={toggleModal} />} />
+                                <Route exact path='/forgot-password' element={<ForgotPasswordPage />} />
+                                <Route exact path='/reset-password' element={
+                                    <ProtectedRoute><ResetPassword /></ProtectedRoute>
+                                } />
+                                {/*<Route exact path='/admin' element={*/}
+                                {/*    <ProtectedRoute><AdminPanel /></ProtectedRoute>*/}
+                                {/*} />*/}
+                                <Route exact path='/admin' element={<AdminPanel />} />
+                                <Route exact path='/manage-products' element={<ManageProducts />} />
+                                <Route exact path='/rental-items' element={<RentalItems />} />
+                                <Route exact path='/results' element={<ResultsPage />} />
+                                <Route path="/payment" element={<DummyPaymentPage />} />
+                                <Route path="/payment-success" element={<SuccessPopup />} />
+                            </Routes>
+                        </div>
+                        <ProductListModal show={showModal} closeModal={toggleModal} />
+                        {/*<Footer />*/}
                     </div>
-                    <ProductListModal show={showModal} closeModal={toggleModal} />
-                    {/*<Footer />*/}
-                </div>
+                </LoadScript>
             </Router>
         </SessionProvider>
     );
