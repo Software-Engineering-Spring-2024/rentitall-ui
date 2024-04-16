@@ -33,7 +33,7 @@
         border: 1px solid var(--input-border-color);
         border-radius: 0.5rem;
         color: var(--text-primary-color);
-        padding: 1rem 2.5rem 1rem 1rem;
+        padding: 1rem 3.3rem 1rem 2.25rem;
         font-size: 1rem;
     }
     ::-ms-input-placeholder { /* Edge 12-18 */
@@ -58,7 +58,7 @@
         position: absolute;
         padding: 0;
         right: 0.5rem;
-        top: 1rem;
+        top: 1.1rem;
         svg {
             fill: white;
         }
@@ -68,6 +68,17 @@
         transform: scale(1.2)
     }
 
+    .remove-text-element {
+        background-color: transparent;
+        position: absolute;
+        padding: 0;
+        right: 2rem;
+        top: 1rem;
+        cursor: pointer;
+        svg {
+            fill: white;
+        }
+    }
 
     .navbar-actions {
         display: flex;
@@ -124,5 +135,20 @@
         .user-profile:hover {
             /* box-shadow: 6px 6px 6px #091b19 inset, -6px -6px 6px #2c0f0f inset; */
         }
+    }
+
+    .mic {
+        background-color: transparent;
+        position: absolute;
+        padding: 0;
+        left: 0.5rem;
+        top: 1.1rem;
+        svg {
+            fill: white;
+        }
+    }
+    .mic:hover {
+        background-color: transparent;
+        transform: scale(1.2)
     }
 }

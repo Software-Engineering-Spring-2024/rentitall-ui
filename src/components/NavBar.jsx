@@ -5,28 +5,53 @@ import { useUser } from '../hooks/UserContext';
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import SearchIcon from '@mui/icons-material/Search';
-import axios from 'axios';
+import MicIcon from '@mui/icons-material/Mic';
+import MicOffIcon from '@mui/icons-material/MicOff';
+import { useVoice } from '../hooks/useVoice';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const NavBar = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
     const { loginData, logOutUser, user } = useUser();
-    const [searchInput, setSearchInput] = useState('')
-    const [showProfileDropDown, setShowProfileDropDown] = useState(false)
-    useEffect(() => {
-        // console.log('searchInput', searchInput)
-    }, [searchInput])
-    const handleSearch = useCallback(async (e) => {
-        e.preventDefault();
-        // console.log('search clicked!!!')
-        if(searchInput.length == 0) return
-        
-        if (location.pathname == '/results') {
-            searchParams.set('phrase', searchInput)
-        }
-        navigate(`/results?phrase=${searchInput}`)
+    const [searchInput, setSearchInput] = useState({
+        value: '',
+        voice: false
     })
+    const [showProfileDropDown, setShowProfileDropDown] = useState(false)
+        useEffect(() => {
+        if(searchInput.voice) {
+            handleSearch()
+        }
+    }, [searchInput])
+    const handleSearch = useCallback(async () => {
+        // console.log('search clicked!!!')
+
+        const phrase = searchInput.value.trim()
+        if (phrase.length == 0) return
+
+        if (location.pathname == '/results') {
+            searchParams.set('phrase', phrase)
+        }
+        navigate(`/results?phrase=${phrase}`)
+    })
+
+    // Voice Search
+    const {
+        text,
+        isListening,
+        listen,
+        voiceSupported,
+    } = useVoice(handleSearch);
+
+    useEffect(() => {
+        setSearchInput({
+            value: text,
+            voice: true
+        })
+    }, [text])
+
     const toggleProfileDropdown = useCallback(() => {
         setShowProfileDropDown(!showProfileDropDown)
     })
@@ -48,6 +73,7 @@ export const NavBar = (props) => {
     }
 
     const searchBarExcludedPaths = ['/login', '/forgot-password', '/signup']
+
     return (
         <div className="NavBar">
             <div onClick={goToHomePage}>
@@ -61,12 +87,22 @@ export const NavBar = (props) => {
                     !searchBarExcludedPaths.includes(location.pathname) &&
                     (
                         <div className='search-bar-wrapper'>
-                            <form className='search-bar-form' onSubmit={handleSearch}>
+                            <form className='search-bar-form' onSubmit={(e) => { e.preventDefault(); handleSearch() }}>
                                 <div className='input-wrapper'>
-                                    <input type="text" id="searchbar" name="searchbar" value={searchInput} placeholder="Search..." onChange={(e) => {
-                                        setSearchInput(e.target.value)
+                                    <input type="text" id="searchbar" name="searchbar" value={searchInput.value} placeholder="Search..." onChange={(e) => {
+                                        setSearchInput({
+                                            value: e.target.value,
+                                            voice: false
+                                        })
                                     }} />
                                 </div>
+                                {searchInput.value.length > 0 && <span className='remove-text-element' onClick={(e) => {
+                                    setSearchInput({
+                                        value: '',
+                                        voice: false
+                                    })
+                                }}><CloseIcon color='white' fontSize='8' /></span>}
+                                {voiceSupported && <button type='button' className='mic' onClick={listen}>{isListening ? <MicOffIcon color='white' /> : <MicIcon color='white' />}</button>}
                                 <button type="submit" className='search-submit'><SearchIcon color='white' /></button>
                             </form>
                         </div>
