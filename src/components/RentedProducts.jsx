@@ -120,7 +120,7 @@ export const RentedProducts = () => {
                 <Typography gutterBottom variant="h5" component="div" className="text-black">
                     Current
                 </Typography>
-                <div className="flex md:flex-row gap-3">
+                <div className="flex flex-wrap md:flex-row gap-3">
                     {products.current.map((productInfo) => (
                         <Card key={productInfo.product.id}
                               className={`max-w-md manage-product-card ${productInfo.active === false ? 'opacity-50' : ''}`}>
@@ -175,7 +175,7 @@ export const RentedProducts = () => {
                 <Typography gutterBottom variant="h5" component="div" className="text-black">
                     Past
                 </Typography>
-                <div className="flex md:flex-row gap-3">
+                <div className="flex flex-wrap md:flex-row gap-3">
                     {products.past.map((productInfo) => (
                         <Card key={productInfo.product.id}
                               className={`max-w-md manage-product-card ${productInfo.active === false ? 'opacity-50' : ''}`}>
