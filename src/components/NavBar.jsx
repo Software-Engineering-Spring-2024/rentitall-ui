@@ -52,6 +52,11 @@ export const NavBar = (props) => {
     }
 
     const searchBarExcludedPaths = ['/login', '/forgot-password', '/signup']
+
+    function handleManageAccount() {
+        navigate('/manage-account')
+    }
+
     return (
         <div className="NavBar">
             <div onClick={goToHomePage}>
@@ -98,7 +103,7 @@ export const NavBar = (props) => {
                             </div>
                             {showProfileDropDown &&
                                 <div className='user-profile-dropdown'>
-                                    <div className='each-action'>Your Account</div>
+                                    <div className='each-action' onClick={handleManageAccount}>Your Account</div>
                                     <div className='each-action' onClick={handleManageProducts}>Manage Products</div>
                                     {/* <div className='each-action'></div>
                                     <div className='each-action'></div> */}
