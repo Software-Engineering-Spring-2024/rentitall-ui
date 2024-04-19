@@ -72,7 +72,7 @@ export const NavBar = (props) => {
         navigate('/manage-products')
     }
 
-    const searchBarExcludedPaths = ['/login', '/forgot-password', '/signup']
+    const searchBarExcludedPaths = ['/login', '/forgot-password', '/signup', '/reset-password']
 
     function handleManageAccount() {
         navigate('/manage-account')
