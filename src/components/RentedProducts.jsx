@@ -6,7 +6,16 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Rating, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material';
+import {
+    Rating,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    TextField,
+    FormControl,
+    InputLabel, Select, MenuItem
+} from '@mui/material';
 import { useUser } from "../hooks/UserContext";
 import axios from "axios";
 import '../styles/OwnedProducts.css'
@@ -20,6 +29,7 @@ export const RentedProducts = () => {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [rating, setRating] = useState(0);
     const [ticketDescription, setTicketDescription] = useState("");
+    const [ticketType, setTicketType] = useState('');
     const [products, setProducts] = useState({ current: [], past: [] });
     const fetchRentedProducts = async () => {
         try {
@@ -96,18 +106,28 @@ export const RentedProducts = () => {
     const handleSubmitTicket = async () => {
         try {
             // Assuming you have an endpoint to submit the ticket
-            await axios.post(`${process.env.REACT_APP_TICKET_SERVICE}/submitTicket`, {
+            const payload = {
                 productId: currentProduct.product_id,
+                ticketType: ticketType,  // Include the ticket type in the payload
                 description: ticketDescription,
-                userId: user.user_id // Assuming you have user's ID available
-            });
+                userId: user.user_id  // Assuming you have user's ID available
+            };
+
+            await axios.post(`${process.env.REACT_APP_PRODUCT_SERVICE}/submitTicket`, payload);
+
+            // Reset dialog state and clear form data
             setTicketDialogOpen(false);
-            setTicketDescription("");
+            setTicketType('');     // Reset the ticket type
+            setTicketDescription('');  // Reset the ticket description
+
             // Optionally, refresh or update the UI as needed
+            // For example, you might want to fetch updated ticket information or display a success message
+            console.log('Ticket submitted successfully');
         } catch (error) {
             console.error('Error submitting ticket:', error);
         }
     };
+
 
     return (
         <>
@@ -246,23 +266,41 @@ export const RentedProducts = () => {
             <Dialog open={ticketDialogOpen} onClose={() => setTicketDialogOpen(false)}>
                 <DialogTitle>Raise a Ticket</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="ticketDescription"
-                        label="Ticket Description"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={ticketDescription}
-                        onChange={(e) => setTicketDescription(e.target.value)}
-                    />
+                    <FormControl fullWidth margin="dense">
+                        <InputLabel id="ticket-type-label">Ticket Type</InputLabel>
+                        <Select
+                            labelId="ticket-type-label"
+                            id="ticketType"
+                            value={ticketType}
+                            label="Ticket Type"
+                            onChange={(e) => setTicketType(e.target.value)}
+                            fullWidth
+                        >
+                            <MenuItem value="Refund Request">Refund Request</MenuItem>
+                            <MenuItem value="Complaint">Complaint</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {ticketType && (
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="ticketDescription"
+                            label="Ticket Description"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={ticketDescription}
+                            onChange={(e) => setTicketDescription(e.target.value)}
+                            placeholder={`Enter details for your ${ticketType.toLowerCase()}`}
+                        />
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setTicketDialogOpen(false)}>Cancel</Button>
                     <Button onClick={handleSubmitTicket}>Submit</Button>
                 </DialogActions>
             </Dialog>
+
         </>
     );
 };
