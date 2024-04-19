@@ -43,10 +43,10 @@ export const ManageAccount = () => {
                 firstName: user.firstName || '',
                 lastName: user.lastName || '',
                 address: user.address || '',
-                mobile: user.mobile || '',
-                lat: user.lat || '',
-                long: user.long || '',
-                zipcode: user.zipcode || ''
+                mobile: user.mobile || null,
+                lat: user.lat || null,
+                long: user.long || null,
+                zipcode: user.zipcode || null
             });
         }
     }, [user]);
