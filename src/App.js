@@ -19,6 +19,7 @@ import { ResultsPage } from './screens/results';
 import { SuccessPopup } from "./components/SuccessPopup";
 import DummyPaymentPage from "./components/DummyPaymentPage";
 import { LoadScript } from '@react-google-maps/api';
+import {ManageAccount} from "./components/ManageAccount";
 
 const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
@@ -50,6 +51,7 @@ function App() {
                                 {/*} />*/}
                                 <Route exact path='/admin' element={<AdminPanel />} />
                                 <Route exact path='/manage-products' element={<ManageProducts />} />
+                                <Route exact path='/manage-account' element={<ManageAccount />} />
                                 <Route exact path='/rental-items' element={<RentalItems />} />
                                 <Route exact path='/results' element={<ResultsPage />} />
                                 <Route path="/payment" element={<DummyPaymentPage />} />

@@ -11,30 +11,31 @@ export const UserProvider = ({ children }) => {
   const [loginData, setLoginData] = useState(initialData);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
-
-  useEffect(() => {
-    const updateUserData = async () => {
-      if (loginData.isLoggedIn) {
-        const user_jwtToken = Cookies.get('user_jwtToken');
-        if (user_jwtToken) {
-          try {
-            const response = await axios.get(process.env.REACT_APP_LOGIN_SERVICE + "/get-user-details-from-token", {
-              headers: {
-                'Authorization': `Bearer ${user_jwtToken}`
-              }
-            });
-            console.log('/get-user-details-from-token', response);
-            setUser(response.data.userDetails[0]); 
-          } catch (error) {
-            console.error('Error fetching user details:', error);
-            logOutUser();
-          }
-        } else {
-          console.log('JWT Token is not present');
-          logOutUser()
+  const updateUserData = async () => {
+    if (loginData.isLoggedIn) {
+      const user_jwtToken = Cookies.get('user_jwtToken');
+      if (user_jwtToken) {
+        try {
+          const response = await axios.get(process.env.REACT_APP_LOGIN_SERVICE + "/get-user-details-from-token", {
+            headers: {
+              'Authorization': `Bearer ${user_jwtToken}`
+            }
+          });
+          console.log('/get-user-details-from-token', response);
+          setUser(response.data.userDetails[0]);
+        } catch (error) {
+          console.error('Error fetching user details:', error);
+          logOutUser();
         }
+      } else {
+        console.log('JWT Token is not present');
+        logOutUser()
       }
     }
+  }
+  const refreshData = updateUserData;
+
+  useEffect(() => {
 
     updateUserData();
   }, [loginData]);
@@ -54,7 +55,7 @@ export const UserProvider = ({ children }) => {
   })
 
   return (
-    <UserContext.Provider value={{ loginData, setLoginData, logOutUser, user }}>
+    <UserContext.Provider value={{ loginData, setLoginData, logOutUser, user ,refreshData}}>
       {children}
     </UserContext.Provider>
   );
