@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
-import { useLoadScript, StandaloneSearchBox } from '@react-google-maps/api';
+import { StandaloneSearchBox } from '@react-google-maps/api';
 import { UserProvider, useUser } from "../hooks/UserContext";
 import axios from "axios";
 import { SuccessPopup } from "./SuccessPopup";
@@ -28,8 +28,8 @@ export const ManageAccount = () => {
         lastName: '',
         address: '',
         mobile: '',
-        lat: '',
-        long: '',
+        lat: null,
+        long: null,
         zipcode: ''
     });
     const [successPopup, setSuccessPopup] = useState(false);
@@ -49,15 +49,17 @@ export const ManageAccount = () => {
                 zipcode: user.zipcode || null
             });
         }
-    }, [user]);
-
-    useEffect(() => {
         setTempData(formData);
-    }, [formData]);
+    }, []);
+    useEffect(() => {
+        console.log(formData);
+    },[formData])
+
 
     const handlePlacesChanged = () => {
         if (autocompleteInputRef.current) {
             const place = autocompleteInputRef.current.getPlaces();
+            console.log('address:',place)
             if (place && place.length > 0) {
                 const postalCode = place[0]?.address_components?.find(component => component.types.includes("postal_code"));
                 setTempData(prevDetails => ({
@@ -85,15 +87,29 @@ export const ManageAccount = () => {
 
     const handleSave = (field) => {
         setEditableFields(prev => ({ ...prev, [field]: false }));
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [field]: tempData[field]
-        }));
+        if (field === "address") {
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                [field]: tempData[field],
+                lat: tempData.lat,
+                long: tempData.long,
+                zipcode: tempData.zipcode
+            }));
+            console.log(formData,tempData)
+        } else {
+            // For other fields, update normally
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                [field]: tempData[field]
+            }));
+        }
+        console.log(tempData);
+        console.log(formData);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        update(formData);
+        await update(formData);
     };
 
     const update = useCallback(async (data) => {
@@ -105,7 +121,7 @@ export const ManageAccount = () => {
             });
             if (response.status === 200) {
                 refreshData();
-                setSuccessPopup(true);
+                // setSuccessPopup(true);
             }
         } catch (error) {
             console.error("Failed to update profile:", error);
