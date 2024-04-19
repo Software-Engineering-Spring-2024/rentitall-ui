@@ -59,7 +59,7 @@ function App() {
                             </Routes>
                         </div>
                         <ProductListModal show={showModal} closeModal={toggleModal} />
-                        {/*<Footer />*/}
+                        <Footer />
                     </div>
                 </LoadScript>
             </Router>

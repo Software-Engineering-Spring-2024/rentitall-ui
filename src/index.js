@@ -5,9 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import {UserProvider} from "./hooks/UserContext";
+import Kommunicate from "@kommunicate/kommunicate-chatbot-plugin";
 
 const GOOGLE_AUTH_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID
 // const GOOGLE_OAUTH_CLIENT_SECRET = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET
+const KOMMUNICATE_APP_ID = process.env.REACT_APP_KOMMUNICATE_APP_ID;
+
+Kommunicate.init(KOMMUNICATE_APP_ID, {
+  automaticChatOpenOnNavigation: false,
+  popupWidget: true
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
