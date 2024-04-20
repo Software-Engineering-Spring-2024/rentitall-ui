@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   build-and-deploy:
@@ -16,23 +17,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21.5.0'
+          node-version: '21.5.0' # Specify your Node.js version
 
       - name: Install dependencies
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          echo "Build step completed successfully."
+
+      - name: Log build artifacts
+        run: ls -al build
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          branch: gh-pages
-          folder: build
+          branch: gh-pages  # This is the branch where your site will be published
+          folder: build     # This is the folder where your build assets are located
         id: deploy
 
       - name: Log deployment
         run: echo "Deployed to ${{ steps.deploy.outputs.page_url }}"
+
+      - name: Capture system logs if build fails
+        if: failure()
+        run: |
+          printenv
+          df -h
+          free -m
+          cat /home/runner/.npm/_logs/*-debug.log
