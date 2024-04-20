@@ -24,13 +24,13 @@ export const ManageAccount = () => {
     const { user, refreshData } = useUser();
     const [editableFields, setEditableFields] = useState({});
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        address: '',
-        mobile: '',
-        lat: null,
-        long: null,
-        zipcode: ''
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+        mobile: user.mobile,
+        lat: user.lat || null,
+        long: user.long ||null,
+        zipcode: user.zipcode || null
     });
     const [successPopup, setSuccessPopup] = useState(false);
     const [tempData, setTempData] = useState({});
@@ -38,22 +38,12 @@ export const ManageAccount = () => {
     const autocompleteInputRef = useRef(null);
 
     useEffect(() => {
-        if (user) {
-            setFormData({
-                firstName: user.firstName || '',
-                lastName: user.lastName || '',
-                address: user.address || '',
-                mobile: user.mobile || null,
-                lat: user.lat || null,
-                long: user.long || null,
-                zipcode: user.zipcode || null
-            });
-        }
+
         setTempData(formData);
-    }, []);
-    useEffect(() => {
-        console.log(formData);
-    },[formData])
+    }, [formData]);
+    // useEffect(() => {
+    //     console.log(formData,tempData);
+    // },[formData,tempData])
 
 
     const handlePlacesChanged = () => {

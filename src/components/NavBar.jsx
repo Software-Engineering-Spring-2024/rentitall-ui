@@ -59,11 +59,11 @@ export const NavBar = (props) => {
         navigate('/login')
     })
     const goToHomePage = useCallback(() => {
-        navigate('/')
+        navigate('/home')
     })
     const handleLogout = useCallback(async () => {
-        await logOutUser()
         goToHomePage()
+        await logOutUser()
     })
     const handleAdminPanel = () => {
         navigate('/admin');
