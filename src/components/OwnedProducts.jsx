@@ -35,11 +35,12 @@ export const OwnedProducts = () => {
 
 
     useEffect(() => {
-
-        if (user.user_id) {
+        if (user?.user_id) {
             fetchOwnedProducts();
         }
-    }, [user.user_id]);
+    }, [user]);
+
+    useEffect(() => {console.log(ownedProducts)}, [ownedProducts])
 
     const handleUpdateProductStatus = async (productId, status) => {
         try {
@@ -50,7 +51,7 @@ export const OwnedProducts = () => {
             fetchOwnedProducts();
             // Update UI to reflect new status
             setOwnedProducts(ownedProducts.map(product =>
-                product.id === productId ? { ...product, status } : product
+                product.product_id === productId ? { ...product, status } : product
             ));
         } catch (error) {
             console.error('Error updating product status:', error);
@@ -68,7 +69,7 @@ export const OwnedProducts = () => {
         >
             <div className="flex md:flex-row gap-3">
                 {ownedProducts.map((product) => (
-                    <Card key={product.id}
+                    <Card key={product.product_id}
                           className={`max-w-md manage-product-card ${product.status === 'Inactive' ? 'opacity-50' : ''}`}>
                         <CardMedia
                             component="img"
