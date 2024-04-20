@@ -13,9 +13,13 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useUser } from "../hooks/UserContext";
 import axios from "axios";
 import '../styles/OwnedProducts.css'
+import ProductModal from "./ProductModal";
+import ProductPopup from "./ProductPopup";
 
 export const OwnedProducts = () => {
     const [ownedProducts, setOwnedProducts] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [openProductPopup, setOpenProductPopup] = useState(false);
     const { user } = useUser();
 
     const fetchOwnedProducts = async () => {
@@ -29,7 +33,9 @@ export const OwnedProducts = () => {
         }
     };
 
+
     useEffect(() => {
+
         if (user.user_id) {
             fetchOwnedProducts();
         }
@@ -50,7 +56,10 @@ export const OwnedProducts = () => {
             console.error('Error updating product status:', error);
         }
     };
-
+    const handleView = (product)=> {
+        setSelectedProduct(product);
+        setOpenProductPopup(true);
+    }
     return (
         <motion.div
             initial={{opacity: 0}}
@@ -96,24 +105,33 @@ export const OwnedProducts = () => {
                             )}
                         </CardContent>
                         <CardActions>
-                            <Button size="small" color="primary">
+                            <Button size="small" color="primary" style={{ backgroundColor: 'black', color: 'white',borderRadius:'50px' }} onClick= {() => handleView(product)}>
                                 View
                             </Button>
-                            <Button size="small" color="primary">
-                                Manage
-                            </Button>
-                            {product.status === 'Inactive' ? (
-                                <IconButton size="small" color="primary" onClick={() => handleUpdateProductStatus(product.product_id, 'Active')}>
-                                    <CheckCircleIcon /> {/* Enable icon */}
-                                </IconButton>
-                            ) : (
-                                <IconButton size="small" color="secondary" onClick={() => handleUpdateProductStatus(product.product_id, 'Inactive')}>
-                                    <BlockIcon /> {/* Disable icon */}
-                                </IconButton>
+                            {/*<Button size="small" color="primary">*/}
+                            {/*    Manage*/}
+                            {/*</Button>*/}
+                            {['Active', 'Inactive'].includes(product.status) && (
+                                product.status === 'Inactive' ? (
+                                    <IconButton size="small" color="primary" onClick={() => handleUpdateProductStatus(product.product_id, 'Active')}>
+                                        <CheckCircleIcon /> {/* Enable icon */}
+                                    </IconButton>
+                                ) : (
+                                    <IconButton size="small" color="secondary" onClick={() => handleUpdateProductStatus(product.product_id, 'Inactive')}>
+                                        <BlockIcon /> {/* Disable icon */}
+                                    </IconButton>
+                                )
                             )}
                         </CardActions>
                     </Card>
                 ))}
+                {selectedProduct && (
+                    <ProductModal
+                        product={selectedProduct}
+                        isOpen={openProductPopup}
+                        onClose={() => {setOpenProductPopup(false);setSelectedProduct(null);}}
+                    />
+                )}
             </div>
 
         </motion.div>
