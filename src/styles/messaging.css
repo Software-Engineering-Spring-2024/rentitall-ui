@@ -1,0 +1,19 @@
+#Messaging {
+    display: flex;
+    /* min-height: calc(100vh - 78px); */
+    .message-cards-window {
+        width: 30%;
+        border-right: 1px solid var(--border-light-blue-shade);
+        height: 100%;
+        max-height: calc(100vh - 66px);
+        overflow-y: auto;
+        .message-card {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-light-blue-shade);
+        }
+    }
+    .messages-window {
+        width: 70%;
+        height: 100%;
+    }
+}
