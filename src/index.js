@@ -11,10 +11,12 @@ const GOOGLE_AUTH_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID
 // const GOOGLE_OAUTH_CLIENT_SECRET = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET
 const KOMMUNICATE_APP_ID = process.env.REACT_APP_KOMMUNICATE_APP_ID;
 
-Kommunicate.init(KOMMUNICATE_APP_ID, {
-  automaticChatOpenOnNavigation: false,
-  popupWidget: true
-});
+if(!window.location.href.includes('messaging')) {
+  Kommunicate.init(KOMMUNICATE_APP_ID, {
+    automaticChatOpenOnNavigation: false,
+    popupWidget: true
+  });
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
