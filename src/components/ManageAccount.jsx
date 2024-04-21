@@ -52,14 +52,14 @@ export const ManageAccount = () => {
         setTempData(formData);
     }, []);
     useEffect(() => {
-        console.log(formData);
+        // console.log(formData);
     },[formData])
 
 
     const handlePlacesChanged = () => {
         if (autocompleteInputRef.current) {
             const place = autocompleteInputRef.current.getPlaces();
-            console.log('address:',place)
+            // console.log('address:',place)
             if (place && place.length > 0) {
                 const postalCode = place[0]?.address_components?.find(component => component.types.includes("postal_code"));
                 setTempData(prevDetails => ({
@@ -95,7 +95,7 @@ export const ManageAccount = () => {
                 long: tempData.long,
                 zipcode: tempData.zipcode
             }));
-            console.log(formData,tempData)
+            // console.log(formData,tempData)
         } else {
             // For other fields, update normally
             setFormData(prevFormData => ({
@@ -103,8 +103,8 @@ export const ManageAccount = () => {
                 [field]: tempData[field]
             }));
         }
-        console.log(tempData);
-        console.log(formData);
+        // console.log(tempData);
+        // console.log(formData);
     };
 
     const handleSubmit = async (event) => {

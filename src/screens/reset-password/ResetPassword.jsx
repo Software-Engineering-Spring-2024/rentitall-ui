@@ -15,7 +15,7 @@ export const ResetPassword = () => {
     const [successPopup, setSuccessPopup] = useState(false);
 
     async function proceedWithReset() {
-        console.log(email);
+        // console.log(email);
         const response = await axios.post(process.env.REACT_APP_LOGIN_SERVICE + '/reset-password',
             { email: email, password: newPassword });
         response.status === 200 ? setSuccessPopup(true) : setErrorMessage(response.data.message);
