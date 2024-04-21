@@ -16,7 +16,7 @@ export const GoogleLoginButton = () => {
         <GoogleLogin
             onSuccess={async (credentialResponse) => {
                 const tokenDecoded = jwtDecode(credentialResponse.credential)
-                console.log(tokenDecoded)
+                // console.log(tokenDecoded)
                 const userDetails = {
                     email : tokenDecoded.email,
                     fullName : tokenDecoded.name,
@@ -30,7 +30,7 @@ export const GoogleLoginButton = () => {
                             "Content-Type": "application/json"
                         }
                 });
-                console.log("google_oauth_response", google_oauth_response)
+                // console.log("google_oauth_response", google_oauth_response)
                 handleLoginSuccess(google_oauth_response.data.token)
                 const loginData = { isLoggedIn: true, email: userDetails.email };
                 setLoginData(loginData);

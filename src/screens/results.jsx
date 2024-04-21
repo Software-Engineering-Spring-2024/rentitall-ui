@@ -25,7 +25,7 @@ export const ResultsPage = (props) => {
     }
 
     const getAvailableCategories = async () => {
-        console.log('calling categories')
+        // console.log('calling categories')
         try {
             const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/categories");
             // console.log("getAvailableCategories response", response?.data?.data)
@@ -38,7 +38,7 @@ export const ResultsPage = (props) => {
     }
 
     const getSearchProductsList = async () => {
-        console.log('calling products')
+        // console.log('calling products')
         try {
             const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/product-list", {
                 params: {
@@ -121,9 +121,9 @@ export const ResultsPage = (props) => {
         })
     }
 
-    useEffect(() => {
-        console.log('userSelectedFilters', userSelectedFilters)
-    }, [userSelectedFilters])
+    // useEffect(() => {
+    //     console.log('userSelectedFilters', userSelectedFilters)
+    // }, [userSelectedFilters])
 
     useEffect(() => {
         searchParams.set('sortBy', filters.sortBy);
@@ -134,7 +134,7 @@ export const ResultsPage = (props) => {
     }, [filters])
 
     const handleApplyFilters = (reset = false) => {
-        console.log('categories', categories)
+        // console.log('categories', categories)
         if (reset) {
             setUserSelectedFilters({
                 sortBy: 'newest',

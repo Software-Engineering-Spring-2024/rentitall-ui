@@ -56,7 +56,7 @@ export const LoginPage = () => {
         e.preventDefault();
         if (loginDetails.email !== '' && loginDetails.password !== '') {
             try {
-                console.log(loginDetails);
+                // console.log(loginDetails);
                 const response = await axios.post(process.env.REACT_APP_LOGIN_SERVICE + "/login", loginDetails,
                     {
                         headers:
@@ -64,8 +64,8 @@ export const LoginPage = () => {
                             "Content-Type": "application/json"
                         },
                     });
-                console.log(response.data);
-                console.log(response);
+                // console.log(response.data);
+                // console.log(response);
                 return response.status === 200 ? handleSuccessfulLogin(response.data.token) : handleError(true, response.data.message);
             } catch (error) {
                 console.log(error);

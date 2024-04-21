@@ -40,7 +40,7 @@ export const OwnedProducts = () => {
         }
     }, [user]);
 
-    useEffect(() => {console.log(ownedProducts)}, [ownedProducts])
+    // useEffect(() => {console.log(ownedProducts)}, [ownedProducts])
 
     const handleUpdateProductStatus = async (productId, status) => {
         try {

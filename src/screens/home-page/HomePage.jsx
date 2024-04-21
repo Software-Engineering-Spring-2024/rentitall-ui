@@ -25,7 +25,7 @@ export const HomePage = (props) => {
     const isNotSmallScreen = useMediaQuery("(min-width: 768px")
     const { userInfo } = useSession();
     const handleProductPopup = (selectedProduct) => {
-        console.log(selectedProduct);
+        // console.log(selectedProduct);
         setSelectedProduct(selectedProduct);
         setOpenProductPopup(true);
     }
@@ -34,7 +34,7 @@ export const HomePage = (props) => {
         const getAvailableCategories = async () => {
             try {
                 const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/categories");
-                console.log("getAvailableCategories response", response?.data?.data)
+                // console.log("getAvailableCategories response", response?.data?.data)
                 const availableCategories = response.data.data
                 setCategories(availableCategories)
 
@@ -45,7 +45,7 @@ export const HomePage = (props) => {
         const getLatestProductsList = async () => {
             try {
                 const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/latest-products-list");
-                console.log("getLatestProductsList response", response?.data?.data)
+                // console.log("getLatestProductsList response", response?.data?.data)
                 const latest_products_list = response.data.data
                 const new_latest_products_list = latest_products_list.map(product => {
                     // if(product.image[0] == '/') {

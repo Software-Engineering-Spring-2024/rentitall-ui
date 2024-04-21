@@ -21,14 +21,14 @@ export const UserProvider = ({ children }) => {
               'Authorization': `Bearer ${user_jwtToken}`
             }
           });
-          console.log('/get-user-details-from-token', response);
+          // console.log('/get-user-details-from-token', response);
           setUser(response.data.userDetails[0]);
         } catch (error) {
           console.error('Error fetching user details:', error);
           logOutUser();
         }
       } else {
-        console.log('JWT Token is not present');
+        // console.log('JWT Token is not present');
         logOutUser()
       }
     }

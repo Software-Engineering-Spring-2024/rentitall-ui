@@ -41,7 +41,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(`Reserving product from ${startDate} to ${endDate} for $${totalPrice}`);
+        // console.log(`Reserving product from ${startDate} to ${endDate} for $${totalPrice}`);
         if (loginData.isLoggedIn) {
             // setSuccessPopup(true);
             // handleClosePopup();
@@ -69,7 +69,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
         const getImagesFromBucket = async () => {
             try {
                 const { data, error } = await supabase.storage.from('product_media').list(`${product.product_id}`);
-                console.log(data, error)
+                // console.log(data, error)
                 const additionalImages = await Promise.all([...data].map(async (file) => {
                     const { data, error } = await supabase.storage
                         .from('product_media')

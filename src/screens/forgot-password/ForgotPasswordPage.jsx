@@ -80,8 +80,8 @@ export const ForgotPasswordPage = () => {
     );
     const verifyCode = (e) => {
         e.preventDefault();
-        console.log(generatedOtp);
-        console.log(verificationCode);
+        // console.log(generatedOtp);
+        // console.log(verificationCode);
         verificationCode === generatedOtp ? navigate('/reset-password', { state: { email: email, allowed: true } }) : setDisplayMessageColor('text-red-600');
         setDisplayMessage('Enter a Valid Verification Code');
     }
