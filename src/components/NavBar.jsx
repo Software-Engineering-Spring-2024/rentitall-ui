@@ -94,19 +94,21 @@ export const NavBar = (props) => {
                     </div>
                     {
                         loginData.isLoggedIn && user && user.is_admin ? (
-                            <>
-                                <div className='item-wrapper'>
-                                    <a onClick={handleAdminPanel} className='item'>
-                                        Admin Panel
-                                    </a>
-                                </div>
-                                <div className='item-wrapper'>
-                                    <a href='/messaging' className='item'>
-                                        Messaging
-                                    </a>
-                                </div>
-                            </>
+                            <div className='item-wrapper'>
+                                <a onClick={handleAdminPanel} className='item'>
+                                    Admin Panel
+                                </a>
+                            </div>
                         ) : (<></>)
+                    }
+                    {
+                        loginData.isLoggedIn && user && (
+                            <div className='item-wrapper'>
+                                <a href='/messaging' className='item'>
+                                    Messaging
+                                </a>
+                            </div>
+                        )
                     }
                 </div>
                 <div className="navbar-actions">
