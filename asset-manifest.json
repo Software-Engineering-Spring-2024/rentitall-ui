@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/rentitall-ui/static/css/main.d590ab41.css",
-    "main.js": "/rentitall-ui/static/js/main.efe59f4d.js",
+    "main.css": "/rentitall-ui/static/css/main.71f4f0aa.css",
+    "main.js": "/rentitall-ui/static/js/main.bed0075e.js",
     "static/js/952.f11c122d.chunk.js": "/rentitall-ui/static/js/952.f11c122d.chunk.js",
     "static/js/453.d2c8b72c.chunk.js": "/rentitall-ui/static/js/453.d2c8b72c.chunk.js",
     "static/media/rental-products2.png": "/rentitall-ui/static/media/rental-products2.9a1b6ada5789d8b3c6c0.png",
     "static/media/rentitall-logo.jpg": "/rentitall-ui/static/media/rentitall-logo.848b1cdedc119dcf6b9c.jpg",
     "static/media/layered-waves-haikei.svg": "/rentitall-ui/static/media/layered-waves-haikei.bf37b0ef2cd1a5f725a4.svg",
     "index.html": "/rentitall-ui/index.html",
-    "main.d590ab41.css.map": "/rentitall-ui/static/css/main.d590ab41.css.map",
-    "main.efe59f4d.js.map": "/rentitall-ui/static/js/main.efe59f4d.js.map",
+    "main.71f4f0aa.css.map": "/rentitall-ui/static/css/main.71f4f0aa.css.map",
+    "main.bed0075e.js.map": "/rentitall-ui/static/js/main.bed0075e.js.map",
     "952.f11c122d.chunk.js.map": "/rentitall-ui/static/js/952.f11c122d.chunk.js.map",
     "453.d2c8b72c.chunk.js.map": "/rentitall-ui/static/js/453.d2c8b72c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d590ab41.css",
-    "static/js/main.efe59f4d.js"
+    "static/css/main.71f4f0aa.css",
+    "static/js/main.bed0075e.js"
   ]
 }
