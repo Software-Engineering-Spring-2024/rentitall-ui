@@ -9,6 +9,8 @@ import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import { useVoice } from '../hooks/useVoice';
 import CloseIcon from '@mui/icons-material/Close';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase-config';
 
 export const NavBar = (props) => {
     const navigate = useNavigate();
@@ -77,6 +79,33 @@ export const NavBar = (props) => {
     function handleManageAccount() {
         navigate('/manage-account')
     }
+
+    // Handle online/offline status update
+    useEffect(() => {
+        if (user && user.user_id) {
+            const statusRef = doc(db, "userStatus", user.user_id);
+            const goOnline = () => setDoc(statusRef, { online: true }, { merge: true });
+            const goOffline = () => setDoc(statusRef, { online: false }, { merge: true });
+
+            const handleVisibilityChange = () => {
+                if (document.visibilityState === 'hidden') {
+                    goOffline();
+                } else {
+                    goOnline();
+                }
+            };
+
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            window.addEventListener('beforeunload', goOffline);
+            goOnline();
+
+            return () => {
+                goOffline();
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+                window.removeEventListener('beforeunload', goOffline);
+            };
+        }
+    }, [user]);
     return (
         <div className="NavBar">
             <div onClick={goToHomePage}>
