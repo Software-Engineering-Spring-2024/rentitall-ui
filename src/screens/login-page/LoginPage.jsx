@@ -152,7 +152,7 @@ export const LoginPage = () => {
                                             {showPassword ? <BsEye size='20' color="white" /> : <BsEyeSlash size='20' color="white" />}
                                         </a>
                                     </span>
-                                    <a href="/forgot-password" className="helper-text">Forgot your password? Click here.</a>
+                                    <a onClick={()=>navigate('/forgot-password')} className="helper-text hover:cursor-pointer">Forgot your password? Click here.</a>
                                 </div>
                             </div>
                             <div>
@@ -162,7 +162,7 @@ export const LoginPage = () => {
                                 >
                                     Sign in
                                 </button>
-                                <a href="/signup" className="helper-text">New to RentItAll. Sign Up now.</a>
+                                <a onClick={()=>navigate('/forgot-password')} className="helper-text hover:cursor-pointer">New to RentItAll. Sign Up now.</a>
                             </div>
                         </form>
                         <div className="or-line">

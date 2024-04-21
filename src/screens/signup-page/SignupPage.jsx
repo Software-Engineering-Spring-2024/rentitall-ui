@@ -253,7 +253,7 @@ export const SignupPage = () => {
                                 >
                                     Sign Up
                                 </button>
-                                <a href="/login" className="helper-text">Already Have an Account? Sign In.</a>
+                                <a onClick={()=>navigate('/login')} className="helper-text hover:cursor-pointer">Already Have an Account? Sign In.</a>
                             </div>
                         </form>
                         <div className="or-line">
