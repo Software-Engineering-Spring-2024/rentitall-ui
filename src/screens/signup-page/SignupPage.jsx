@@ -24,7 +24,7 @@ export const SignupPage = () => {
             ...signupDetails, // Spread the current formData
             [name]: value // Update the value of the specific field
         });
-        console.log(signupDetails);
+        // console.log(signupDetails);
     };
 
     const handleSignupError = (data) => {
@@ -42,7 +42,7 @@ export const SignupPage = () => {
                         "Content-Type": "application/json"
                     }
                 });
-            console.log(response);
+            // console.log(response);
 
             response.status === 200 ? setSuccessPopup(true) : handleSignupError(response.data);
         }, [signupDetails]);
@@ -52,7 +52,7 @@ export const SignupPage = () => {
     const handlePlacesChanged = () => {
         if (autocompleteInputRef.current) {
             const place = autocompleteInputRef.current.getPlaces();
-            console.log('address', place);
+            // console.log('address', place);
             if(place && place.length > 0) {
                 const postalCode = place[0]?.address_components?.find(component => component.types.includes("postal_code"));
                 
@@ -253,7 +253,7 @@ export const SignupPage = () => {
                                 >
                                     Sign Up
                                 </button>
-                                <a href="/login" className="helper-text">Already Have an Account? Sign In.</a>
+                                <a onClick={()=>navigate('/login')} className="helper-text hover:cursor-pointer">Already Have an Account? Sign In.</a>
                             </div>
                         </form>
                         <div className="or-line">

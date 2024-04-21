@@ -11,6 +11,7 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { supabase } from './../supabaseClient.js';
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import SendIcon from '@mui/icons-material/Send';
 
 const ProductPopup = ({ product, isOpen, onClose }) => {
     const [startDate, setStartDate] = useState("");
@@ -40,7 +41,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(`Reserving product from ${startDate} to ${endDate} for $${totalPrice}`);
+        // console.log(`Reserving product from ${startDate} to ${endDate} for $${totalPrice}`);
         if (loginData.isLoggedIn) {
             // setSuccessPopup(true);
             // handleClosePopup();
@@ -68,7 +69,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
         const getImagesFromBucket = async () => {
             try {
                 const { data, error } = await supabase.storage.from('product_media').list(`${product.product_id}`);
-                console.log(data, error)
+                // console.log(data, error)
                 const additionalImages = await Promise.all([...data].map(async (file) => {
                     const { data, error } = await supabase.storage
                         .from('product_media')
@@ -98,6 +99,16 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
 
         getImagesFromBucket()
     }, [product])
+
+    const handleMessage = (user_id) => {
+        if(loginData.isLoggedIn) {
+            // Go to messages page
+            navigate(`/messaging?user_id=${user_id}`)
+        }
+        else {
+            navigate('/login');
+        }
+    }
 
     if (!product) return null;
 
@@ -130,7 +141,7 @@ const ProductPopup = ({ product, isOpen, onClose }) => {
 
                     <div className="mb-4">
                         <span className="text-gray-600">Owner Name:</span>
-                        <span className="text-xl text-gray-800 font-semibold capitalize"> {product.owner.firstName} {product.owner.lastName} </span>
+                        <span className="text-xl text-gray-800 font-semibold capitalize"> {product.owner.firstName} {product.owner.lastName} <button className='chat-with-owner-button' title='Message Owner' onClick={() => handleMessage(product.owner.user_id)}>Message <SendIcon /></button></span>
                     </div>
                     <div className="mb-4">
                         <span className="text-gray-600">Location:</span>

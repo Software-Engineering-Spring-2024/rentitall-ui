@@ -50,12 +50,12 @@ export const ProductListModal = (props) => {
             ...productDetails, // Spread the current formData
             [name]: value // Update the value of the specific field
         });
-        console.log(productDetails);
+        // console.log(productDetails);
     };
 
     const handleFileUpload = (e) => {
         const inputFile = e.target.files[0]
-        console.log(inputFile)
+        // console.log(inputFile)
         if (inputFile) {
             const reader = new FileReader();
 
@@ -89,7 +89,7 @@ export const ProductListModal = (props) => {
     // Handle multiple additional media upload
     const [additionalMedia, setAdditionalMedia] = useState([])
     const additionalFilesInputRef = useRef(null)
-    useEffect(() => { console.log(additionalMedia); }, [additionalMedia])
+    // useEffect(() => { console.log(additionalMedia); }, [additionalMedia])
     const handleAdditionalMediaUpload = (e) => {
         const files = [...e.target.files].map(file => {
             return {
@@ -118,7 +118,7 @@ export const ProductListModal = (props) => {
             });
 
             const results = await Promise.all(uploads);
-            console.log(results);
+            // console.log(results);
         } catch (error) {
             console.log(error)
         }
@@ -126,7 +126,7 @@ export const ProductListModal = (props) => {
 
     const handleSubmitProductListDetails = useCallback(async (e) => {
         e.preventDefault()
-        console.log('product details to be submitted', productDetails)
+        // console.log('product details to be submitted', productDetails)
         try {
             const response = await axios.post(process.env.REACT_APP_PRODUCT_SERVICE + "/add-product", productDetails,
                 {
@@ -159,7 +159,7 @@ export const ProductListModal = (props) => {
 
     // Update owner id with logged in user's id
     useEffect(() => {
-        console.log(user)
+        // console.log(user)
         if (user?.user_id) {
             setProductDetails({
                 ...productDetails,
@@ -173,7 +173,7 @@ export const ProductListModal = (props) => {
         const getAvailableCategories = async () => {
             try {
                 const response = await axios.get(process.env.REACT_APP_PRODUCT_SERVICE + "/categories");
-                console.log("getAvailableCategories response", response?.data?.data)
+                // console.log("getAvailableCategories response", response?.data?.data)
                 const availableCategories = response.data.data
                 setCategories(availableCategories)
 

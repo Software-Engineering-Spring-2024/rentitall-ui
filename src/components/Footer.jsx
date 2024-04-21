@@ -1,12 +1,17 @@
 import React from "react"
 import './../styles/Footer.css'
+import { useLocation } from "react-router-dom";
 
 export const Footer = () => {
+    const location = useLocation();
     return (
         <React.Fragment>
-            <div id="Footer">
+            {
+                location.pathname !== '/messaging' &&
+                (<div id="Footer">
 
-            </div>
+                </div>)
+            }
         </React.Fragment>
     )
 }

@@ -31,6 +31,7 @@ export const RentedProducts = () => {
     const [ticketDescription, setTicketDescription] = useState("");
     const [ticketType, setTicketType] = useState('');
     const [products, setProducts] = useState({ current: [], past: [] });
+    // useEffect(() => {console.log(products)}, [products])
     const fetchRentedProducts = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BOOKING_SERVICE}/getRentedProductsByUserId`, {
@@ -57,10 +58,10 @@ export const RentedProducts = () => {
     };
 
     useEffect(() => {
-        if (user.user_id) {
+        if (user?.user_id) {
             fetchRentedProducts();
         }
-    }, [user.user_id]);
+    }, [user]);
 
     const handleUpdateProductStatus = async (productId, transactionId, status) => {
         try {
@@ -85,7 +86,7 @@ export const RentedProducts = () => {
 
     const handleRatingSubmission = async () => {
         try {
-            console.log(currentProduct);
+            // console.log(currentProduct);
             // API call to submit the rating
             await axios.post(`${process.env.REACT_APP_BOOKING_SERVICE}/rateProduct`, {
                 productId: currentProduct.product_id,
@@ -122,7 +123,7 @@ export const RentedProducts = () => {
 
             // Optionally, refresh or update the UI as needed
             // For example, you might want to fetch updated ticket information or display a success message
-            console.log('Ticket submitted successfully');
+            // console.log('Ticket submitted successfully');
         } catch (error) {
             console.error('Error submitting ticket:', error);
         }
@@ -142,7 +143,7 @@ export const RentedProducts = () => {
                 </Typography>
                 <div className="flex flex-wrap md:flex-row gap-3">
                     {products.current.map((productInfo) => (
-                        <Card key={productInfo.product.id}
+                        <Card key={productInfo.product.product_id}
                               className={`max-w-md manage-product-card ${productInfo.active === false ? 'opacity-50' : ''}`}>
                             <CardMedia
                                 component="img"
@@ -197,7 +198,7 @@ export const RentedProducts = () => {
                 </Typography>
                 <div className="flex flex-wrap md:flex-row gap-3">
                     {products.past.map((productInfo) => (
-                        <Card key={productInfo.product.id}
+                        <Card key={productInfo.product.product_id}
                               className={`max-w-md manage-product-card ${productInfo.active === false ? 'opacity-50' : ''}`}>
                             <CardMedia
                                 component="img"

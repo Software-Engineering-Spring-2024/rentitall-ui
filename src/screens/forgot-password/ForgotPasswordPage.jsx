@@ -69,7 +69,7 @@ export const ForgotPasswordPage = () => {
             setTimer(60);
             e.preventDefault();
             if (email !== '' && validator.isEmail(email)) {
-                // await callApi({ email: email })
+                await callApi({ email: email })
             }
             else {
                 setDisplayMessageColor('text-red-600');
@@ -80,8 +80,8 @@ export const ForgotPasswordPage = () => {
     );
     const verifyCode = (e) => {
         e.preventDefault();
-        console.log(generatedOtp);
-        console.log(verificationCode);
+        // console.log(generatedOtp);
+        // console.log(verificationCode);
         verificationCode === generatedOtp ? navigate('/reset-password', { state: { email: email, allowed: true } }) : setDisplayMessageColor('text-red-600');
         setDisplayMessage('Enter a Valid Verification Code');
     }
@@ -110,8 +110,8 @@ export const ForgotPasswordPage = () => {
                                 </label>
                                 <div className="input-wrapper">
                                     <div className="generate-otp-action">
-                                        <a href='#' onClick={sendCodeToEmail}
-                                            className={(startTimer ? 'pointer-events-none opacity-50' : '')}>
+                                        <a onClick={sendCodeToEmail}
+                                            className={(startTimer ? 'pointer-events-none opacity-50' : 'hover:cursor-pointer') }>
                                             Generate OTP
                                         </a>
                                         <>{startTimer && <span className="text-sm font-normal">  :{timer}S</span>}</>

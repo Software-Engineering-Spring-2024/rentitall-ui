@@ -56,7 +56,7 @@ export const LoginPage = () => {
         e.preventDefault();
         if (loginDetails.email !== '' && loginDetails.password !== '') {
             try {
-                console.log(loginDetails);
+                // console.log(loginDetails);
                 const response = await axios.post(process.env.REACT_APP_LOGIN_SERVICE + "/login", loginDetails,
                     {
                         headers:
@@ -64,8 +64,8 @@ export const LoginPage = () => {
                             "Content-Type": "application/json"
                         },
                     });
-                console.log(response.data);
-                console.log(response);
+                // console.log(response.data);
+                // console.log(response);
                 return response.status === 200 ? handleSuccessfulLogin(response.data.token) : handleError(true, response.data.message);
             } catch (error) {
                 console.log(error);
@@ -152,7 +152,7 @@ export const LoginPage = () => {
                                             {showPassword ? <BsEye size='20' color="white" /> : <BsEyeSlash size='20' color="white" />}
                                         </a>
                                     </span>
-                                    <a href="/forgot-password" className="helper-text">Forgot your password? Click here.</a>
+                                    <a onClick={()=>navigate('/forgot-password')} className="helper-text hover:cursor-pointer">Forgot your password? Click here.</a>
                                 </div>
                             </div>
                             <div>
@@ -162,7 +162,7 @@ export const LoginPage = () => {
                                 >
                                     Sign in
                                 </button>
-                                <a href="/signup" className="helper-text">New to RentItAll. Sign Up now.</a>
+                                <a onClick={()=>navigate('/forgot-password')} className="helper-text hover:cursor-pointer">New to RentItAll. Sign Up now.</a>
                             </div>
                         </form>
                         <div className="or-line">
