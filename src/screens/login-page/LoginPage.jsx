@@ -162,7 +162,7 @@ export const LoginPage = () => {
                                 >
                                     Sign in
                                 </button>
-                                <a onClick={()=>navigate('/forgot-password')} className="helper-text hover:cursor-pointer">New to RentItAll. Sign Up now.</a>
+                                <a onClick={()=>navigate('/signup')} className="helper-text hover:cursor-pointer">New to RentItAll. Sign Up now.</a>
                             </div>
                         </form>
                         <div className="or-line">
