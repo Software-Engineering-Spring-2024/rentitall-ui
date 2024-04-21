@@ -10,15 +10,37 @@
             height: 100%;
             max-height: calc(100vh - 66px);
             overflow-y: auto;
+            position: relative;
 
             .message-card {
                 padding: 1rem;
                 border-bottom: 1px solid var(--border-light-blue-shade);
                 cursor: pointer;
+
+                .user-details-on-card {
+                    display: flex;
+                    gap: 1rem;
+                    .username {
+
+                    }
+                    .status {
+                        color: grey;
+                    }
+                    .status.online {
+                        color: greenyellow;
+                    }
+                }
             }
 
             .message-card.selected {
                 background-color: var(--dark-gray-background-color);
+            }
+
+            .create-grp-chat-button {
+                position: absolute;
+                bottom: 1rem;
+                transform: translateX(-50%);
+                left: 50%;
             }
         }
     }
@@ -36,7 +58,7 @@
                 max-height: calc(100vh - 130px);
                 overflow-y: auto;
                 height: 100%;
-                padding: 0 1.5rem 1.5rem;
+                padding: 1.5rem 1.5rem;
 
                 .message-bubble {
                     background-color: var(--chat-bubble-background);
@@ -46,6 +68,13 @@
                     margin-bottom: 0.5rem;
                     float: none;
                     clear: right;
+
+                    .name {
+                        font-size: 12px;
+                        margin-bottom: 8px;
+                        color: var(--button-primary-color);
+                        opacity: 0.8;
+                    }
                 }
 
                 .message-bubble.by-me {
