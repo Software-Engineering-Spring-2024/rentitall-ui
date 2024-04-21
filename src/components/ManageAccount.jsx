@@ -24,13 +24,13 @@ export const ManageAccount = () => {
     const { user, refreshData } = useUser();
     const [editableFields, setEditableFields] = useState({});
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        address: '',
-        mobile: '',
-        lat: null,
-        long: null,
-        zipcode: ''
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+        mobile: user.mobile,
+        lat: user.lat || null,
+        long: user.long ||null,
+        zipcode: user.zipcode || null
     });
     const [successPopup, setSuccessPopup] = useState(false);
     const [tempData, setTempData] = useState({});
@@ -38,28 +38,20 @@ export const ManageAccount = () => {
     const autocompleteInputRef = useRef(null);
 
     useEffect(() => {
-        if (user) {
-            setFormData({
-                firstName: user.firstName || '',
-                lastName: user.lastName || '',
-                address: user.address || '',
-                mobile: user.mobile || null,
-                lat: user.lat || null,
-                long: user.long || null,
-                zipcode: user.zipcode || null
-            });
-        }
+
         setTempData(formData);
-    }, []);
-    useEffect(() => {
-        console.log(formData);
-    },[formData])
+      
+    }, [formData]);
+    // useEffect(() => {
+    //     console.log(formData,tempData);
+    // },[formData,tempData])
+
 
 
     const handlePlacesChanged = () => {
         if (autocompleteInputRef.current) {
             const place = autocompleteInputRef.current.getPlaces();
-            console.log('address:',place)
+            // console.log('address:',place)
             if (place && place.length > 0) {
                 const postalCode = place[0]?.address_components?.find(component => component.types.includes("postal_code"));
                 setTempData(prevDetails => ({
@@ -95,7 +87,7 @@ export const ManageAccount = () => {
                 long: tempData.long,
                 zipcode: tempData.zipcode
             }));
-            console.log(formData,tempData)
+            // console.log(formData,tempData)
         } else {
             // For other fields, update normally
             setFormData(prevFormData => ({
@@ -103,8 +95,8 @@ export const ManageAccount = () => {
                 [field]: tempData[field]
             }));
         }
-        console.log(tempData);
-        console.log(formData);
+        // console.log(tempData);
+        // console.log(formData);
     };
 
     const handleSubmit = async (event) => {

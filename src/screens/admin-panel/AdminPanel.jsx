@@ -21,7 +21,7 @@ export const AdminPanel = () => {
     const fetchProducts = async () => {
         try {
             const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE + "/getUnApprovedProducts");
-            console.log('/getUnApprovedProducts', response.data);
+            // console.log('/getUnApprovedProducts', response.data);
             return response.data.data;
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -45,7 +45,7 @@ export const AdminPanel = () => {
     const fetchStoreLocations = async () => {
         try {
             const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE + "/getStoreLocations");
-            console.log('/getStoreLocations', response.data);
+            // console.log('/getStoreLocations', response.data);
             return response.data.data;
         } catch (error) {
             console.error('Error fetching store locations:', error);
@@ -75,7 +75,7 @@ export const AdminPanel = () => {
                 return;
             }
             const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE+ "/approve?productId=" +productId+"&locationId="+selectedCity);
-            console.log(response.data);
+            // console.log(response.data);
             await getProducts();
         } catch (error) {
             console.error('Error Approving products:', error);
@@ -85,7 +85,7 @@ export const AdminPanel = () => {
     const handleReject = async (productId) => {
         try {
             const response = await axios.get(process.env.REACT_APP_ADMIN_SERVICE + "/reject?productId=" + productId);
-            console.log(response.data);
+            // console.log(response.data);
             await getProducts();
         } catch (error) {
             console.error('Error Rejecting products:', error);
@@ -121,7 +121,7 @@ export const AdminPanel = () => {
     const handleCloseTicket = async (ticketId) => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_ADMIN_SERVICE}/closeTicket`, { ticketId });
-            console.log(response.data);
+            // console.log(response.data);
             await fetchTickets(); // Refresh tickets after closing one
         } catch (error) {
             console.error('Error closing ticket:', error);
