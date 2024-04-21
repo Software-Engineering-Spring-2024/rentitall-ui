@@ -75,39 +75,33 @@ export const Messaging = () => {
     };
 
     const getUserConversations = async (secondUserId) => {
-        const conversationsQuery = query(
-            conversationsRef, (where('users', 'array-contains', user.user_id))
-        );
-        const querySnapshot = await getDocs(conversationsQuery);
-        const conversationsArray = []
-        let isNewChat = true
-        querySnapshot.forEach((doc) => {
-            const docData = doc.data()
-            if (secondUserId) {
-                if (docData.users.includes(secondUserId)) {
-                    isNewChat = false
-                    console.log('false')
-                    setSelectedConversation(docData)
+        const conversationsQuery = query(conversationsRef, where('users', 'array-contains', user.user_id));
+        const unsubscribe = onSnapshot(conversationsQuery, (querySnapshot) => {
+            const conversationsArray = [];
+            let isNewChat = true;
+            querySnapshot.forEach((doc) => {
+                const docData = doc.data();
+                if (secondUserId && docData.users.includes(secondUserId)) {
+                    isNewChat = false;
+                    setSelectedConversation(docData);
                 }
+                conversationsArray.push(docData);
+            });
+            setConversations(conversationsArray);
+            if (secondUserId && isNewChat) {
+                const newConversation = {
+                    users: [user.user_id, secondUserId],
+                    messagesId: uuidv4(),
+                    isNew: true
+                };
+                setSelectedConversation(newConversation);
+                setConversations(prevConversations => [...prevConversations, newConversation]);
             }
-            conversationsArray.push(docData)
         });
-        console.log(conversationsArray)
-        if (secondUserId) {
-            setSendToUser(secondUserId)
-        }
-        console.log(isNewChat)
-        setConversations([...conversationsArray])
-        if (secondUserId && isNewChat) {
-            const newConversation = {
-                users: [user.user_id, secondUserId],
-                messagesId: uuidv4(),
-                isNew: true
-            }
-            setSelectedConversation({ ...newConversation })
-            setConversations([newConversation])
-        }
+    
+        return () => unsubscribe();
     }
+    
 
     const getEachOtherUserDetailById = (id) => {
         console.log(id, otherUserDetails)
@@ -145,24 +139,19 @@ export const Messaging = () => {
     }, [conversations])
 
     useEffect(() => {
-        const getMessages = async () => {
-            if (selectedConversation) {
-                if (selectedConversation?.users?.length == 2) {
-                    searchParams.set('user_id', selectedConversation.users.filter(u => u != user.user_id)[0]);
+        if (selectedConversation) {
+            const unsubscribe = onSnapshot(doc(db, "messages", selectedConversation.messagesId), (doc) => {
+                const data = doc.data();
+                if (data && data.messages) {
+                    setMessages(data.messages);
                 }
-                const docSnap = await getDoc(doc(db, "messages", selectedConversation.messagesId))
-                console.log(docSnap.data())
-                const messagesData = docSnap.data()
-                if (messagesData?.messages) {
-                    setMessages(messagesData.messages)
-                }
-                navigate(`?${searchParams.toString()}`, { replace: true });
-            }
+            });
+    
+            // Clean up the listener when the component unmounts or the selectedConversation changes
+            return () => unsubscribe();
         }
-
-        getMessages()
-        setNewMessage('')
-    }, [selectedConversation])
+    }, [selectedConversation]);
+    
 
     useEffect(() => {
         const user_id = searchParams.get('user_id')
